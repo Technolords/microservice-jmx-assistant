@@ -27,7 +27,7 @@ public class DataHarvestRegistry {
     public static void registerPropertiesInRegistry(Main mainReference) {
         main = mainReference;
         main.bind(BEAN_META_DATA_PROPERTIES, PropertiesManager.extractMetaData());
-//        main.bind(BEAN_PROPERTIES, PropertiesManager.extractProperties());
+        main.bind(BEAN_PROPERTIES, PropertiesManager.extractProperties());
     }
 
     public static void registerBeansInRegistryBeforeStart() {
@@ -40,6 +40,10 @@ public class DataHarvestRegistry {
 
     public static Properties findProperties() {
         return main.lookup(BEAN_PROPERTIES, Properties.class);
+    }
+
+    public static String findConfiguredPeriod() {
+        return (String) findProperties().get(PropertiesManager.PROP_PERIOD);
     }
 
     public static String findBuildMetaData() {

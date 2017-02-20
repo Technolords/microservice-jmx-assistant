@@ -17,6 +17,7 @@ public class DataHarvesterCamelContext extends Main {
     public void beforeStart() {
         LOGGER.info("Before start called...");
         DataHarvestRegistry.registerBeansInRegistryBeforeStart();
+        super.addRouteBuilder(new TimerRoute());
     }
 
     @Override
