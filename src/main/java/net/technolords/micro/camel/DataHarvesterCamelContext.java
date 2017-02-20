@@ -4,17 +4,26 @@ import org.apache.camel.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.technolords.micro.registry.DataHarvestRegistry;
+
 public class DataHarvesterCamelContext extends Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataHarvesterCamelContext.class);
+
+    public DataHarvesterCamelContext() {
+        DataHarvestRegistry.registerPropertiesInRegistry(this);
+    }
 
     @Override
     public void beforeStart() {
         LOGGER.info("Before start called...");
+        DataHarvestRegistry.registerBeansInRegistryBeforeStart();
     }
 
     @Override
     public void afterStart() {
         LOGGER.info("After start called...");
+        DataHarvestRegistry.registerBeansInRegistryAfterStart();
+        LOGGER.info("JMX assistant service started ({}), use CTRL-C to terminate JVM", DataHarvestRegistry.findBuildMetaData());
     }
 
     /**
