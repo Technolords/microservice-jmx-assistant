@@ -24,8 +24,8 @@
         <!--+
             | Version properties
             +-->
-        <camel.version>2.18.0</camel.version>
-        <camel.testng.version>2.18.0</camel.testng.version>
+        <camel.version>2.18.2</camel.version>
+        <camel.testng.version>2.18.2</camel.testng.version>
         <log4j.version>2.7</log4j.version>
         <maven.build.helper.plugin.version>1.12</maven.build.helper.plugin.version>
         <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
@@ -52,6 +52,11 @@
         <!--+
             | Default scope
             +-->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
         <dependency>
             <!-- Required to use logging -->
             <groupId>org.apache.logging.log4j</groupId>
