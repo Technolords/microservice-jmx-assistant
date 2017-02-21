@@ -13,6 +13,7 @@ import net.technolords.micro.registry.DataHarvestRegistry;
 
 public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private static final String DEFAULT_PERIOD = "10s";
     public static final String ROUTE_ID_TIMER = "RouteTimer";
     public static final String ROUTE_ID_MAIN = "RouteMain";
     private static final String DIRECT_MAIN = "direct:main";
@@ -26,7 +27,7 @@ public class TimerRoute extends RouteBuilder {
     public TimerRoute() {
         this.period = DataHarvestRegistry.findConfiguredPeriod();
         if (this.period == null || this.period.isEmpty()) {
-            this.period = "10s";
+            this.period = DEFAULT_PERIOD;
         }
         LOGGER.info("Using period: {}", this.period);
     }

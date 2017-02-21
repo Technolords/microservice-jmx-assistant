@@ -12,6 +12,8 @@ import org.jolokia.client.request.J4pReadResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.technolords.micro.jolokia.JolokiaClientFactory;
+
 public class JolokiaProcessor implements Processor {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -26,17 +28,29 @@ public class JolokiaProcessor implements Processor {
     }
 
     private void executeJolokiaQuery() throws MalformedObjectNameException, J4pException {
-        J4pClient client = J4pClient
-                .url("http://localhost:8185/jolokia")
-                .user("admin")
-                .password("admin")
-                .authenticator(new BasicAuthenticator().preemptive())
-                .connectionTimeout(3000)
-                .build();
+        J4pClient client = JolokiaClientFactory.createJolokiaClient();
         J4pReadRequest request =
                 new J4pReadRequest("java.lang:type=Memory","HeapMemoryUsage");
         request.setPath("used");
         J4pReadResponse response = client.execute(request);
         LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
     }
+
+    /*
+        logging:
+            LOGGER.info("Response: {}", response.getValue().toString());
+        response:
+            2017-02-21 11:21:40,244 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [org.apache.camel.util.CamelLogger] Got time event...
+            2017-02-21 11:21:40,244 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] About to invoke a jolokia query...
+            2017-02-21 11:21:40,244 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] Timer data -> invoker: harvester, period: 10000 ms
+            2017-02-21 11:21:40,394 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] Response: 87347896
+
+        logging:
+            LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
+        response:
+            2017-02-21 11:22:41,550 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [org.apache.camel.util.CamelLogger] Got time event...
+            2017-02-21 11:22:41,551 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] About to invoke a jolokia query...
+            2017-02-21 11:22:41,551 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] Timer data -> invoker: harvester, period: 10000 ms
+            2017-02-21 11:22:41,699 [INFO] [Camel (camel-1) thread #0 - timer://harvester] [net.technolords.micro.camel.JolokiaProcessor] Response: {"request":{"path":"used","mbean":"java.lang:type=Memory","attribute":"HeapMemoryUsage","type":"read"},"value":88203048,"timestamp":1487672561,"status":200}
+     */
 }

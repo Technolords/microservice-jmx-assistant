@@ -42,8 +42,29 @@ public class DataHarvestRegistry {
         return main.lookup(BEAN_PROPERTIES, Properties.class);
     }
 
+    public static String findConfiguredUsername() {
+        return (String) findProperties().get(PropertiesManager.PROP_USERNAME);
+    }
+
+    public static String findConfiguredPassword() {
+        return (String) findProperties().get(PropertiesManager.PROP_PASSWORD);
+    }
+
     public static String findConfiguredPeriod() {
         return (String) findProperties().get(PropertiesManager.PROP_PERIOD);
+    }
+
+    public static int findConnectionTimeout() {
+        int value = -1;
+        String connectionTimeout = (String) findProperties().get(PropertiesManager.PROP_CONNECTION_TIMEOUT);
+        if (connectionTimeout != null) {
+            try {
+                value = Integer.parseInt(connectionTimeout);
+            } catch (NumberFormatException e) {
+                LOGGER.error("Connection timeout is not a number", e);
+            }
+        }
+        return value;
     }
 
     public static String findBuildMetaData() {

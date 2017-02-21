@@ -21,7 +21,10 @@ public class PropertiesManager {
     public static final String PROP_BUILD_DATE = "build-timestamp";
     public static final String PROP_PROPS = "props";
     private static final String PROP_LOG_CONFIG = "log4j.configurationFile";
+    public static final String PROP_USERNAME = "username";
+    public static final String PROP_PASSWORD = "password";
     public static final String PROP_PERIOD = "period";
+    public static final String PROP_CONNECTION_TIMEOUT = "connection.timeout";
 
     /**
      * Auxiliary method that loads properties from an embedded file. This file is dynamically updated during each
@@ -78,6 +81,7 @@ public class PropertiesManager {
         } catch (IOException e) {
             LOGGER.warn("Unable to read properties -> ignoring values and using defaults", e);
         }
+        LOGGER.info("Total properties registered: {}", properties.size());
         return properties;
     }
 }
