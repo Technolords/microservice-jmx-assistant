@@ -24,16 +24,18 @@
         <!--+
             | Version properties
             +-->
-        <camel.version>2.18.2</camel.version>
-        <camel.testng.version>2.18.2</camel.testng.version>
-        <log4j.version>2.7</log4j.version>
-        <maven.build.helper.plugin.version>1.12</maven.build.helper.plugin.version>
-        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
-        <maven.shade.plugin.version>2.4.3</maven.shade.plugin.version>
-        <maven.source.plugin.version>2.4</maven.source.plugin.version>
-        <maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
-        <org.testng.version>6.9.4</org.testng.version>
-        <org.custommonkey.xmlunit.version>1.6</org.custommonkey.xmlunit.version>
+        <version.camel>2.18.2</version.camel>
+        <version.camel.testng>2.18.2</version.camel.testng>
+        <version.commons.logging>1.2</version.commons.logging>
+        <version.jolokia>1.3.5</version.jolokia>
+        <version.log4j2>2.7</version.log4j2>
+        <version.maven.plugin.build.helper>1.12</version.maven.plugin.build.helper>
+        <version.maven.plugin.compiler>3.3</version.maven.plugin.compiler>
+        <version.maven.plugin.shade>2.4.3</version.maven.plugin.shade>
+        <version.maven.plugin.source>2.4</version.maven.plugin.source>
+        <version.maven.plugin.surefire>2.18.1</version.maven.plugin.surefire>
+        <version.testng>6.9.4</version.testng>
+        <version.xmlunit>1.6</version.xmlunit>
     </properties>
 
     <!--+
@@ -53,33 +55,45 @@
             | Default scope
             +-->
         <dependency>
+            <!-- Required for Jolokia, transitive dependency -->
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${version.commons.logging}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
-            <version>${camel.version}</version>
+            <version>${version.camel}</version>
         </dependency>
         <dependency>
             <!-- Required to use logging -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
+            <version>${version.log4j2}</version>
         </dependency>
         <dependency>
             <!-- Required to use logging -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
+            <version>${version.log4j2}</version>
         </dependency>
         <dependency>
             <!-- Required to bridge slf4j over log4j -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${log4j.version}</version>
+            <version>${version.log4j2}</version>
         </dependency>
         <dependency>
             <!-- Required to use log4j correctly from jetty -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-web</artifactId>
-            <version>${log4j.version}</version>
+            <version>${version.log4j2}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-client-java</artifactId>
+            <version>${version.jolokia}</version>
         </dependency>
 
         <!--+
@@ -88,19 +102,19 @@
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-testng</artifactId>
-            <version>${camel.testng.version}</version>
+            <version>${version.camel.testng}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>${org.testng.version}</version>
+            <version>${version.testng}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>xmlunit</groupId>
             <artifactId>xmlunit</artifactId>
-            <version>${org.custommonkey.xmlunit.version}</version>
+            <version>${version.xmlunit}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -125,7 +139,7 @@
                 <!-- Required to compile the java sources against a JVM spec -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <version>${version.maven.plugin.compiler}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -136,7 +150,7 @@
                 <!-- Required to bundle all dependencies in a single jar (packaging) -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven.shade.plugin.version}</version>
+                <version>${version.maven.plugin.shade}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -158,7 +172,7 @@
                 <!-- Source plugin configuration -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.plugin.version}</version>
+                <version>${version.maven.plugin.source}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -174,7 +188,7 @@
                 <!-- Required to execute unit tests, supporting both JUnit and TestNG -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.version}</version>
+                <version>${version.maven.plugin.surefire}</version>
                 <configuration>
                     <!--<childDelegation>false</childDelegation>-->
                     <useFile>true</useFile>
@@ -213,7 +227,7 @@
                 <!-- Required to generate timestamp with correct timezone -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${maven.build.helper.plugin.version}</version>
+                <version>${version.maven.plugin.build.helper}</version>
                 <executions>
                     <execution>
                         <id>timestamp-property</id>

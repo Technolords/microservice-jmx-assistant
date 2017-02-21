@@ -16,7 +16,7 @@ public class TimerRoute extends RouteBuilder {
     public static final String ROUTE_ID_TIMER = "RouteTimer";
     public static final String ROUTE_ID_MAIN = "RouteMain";
     private static final String DIRECT_MAIN = "direct:main";
-    private static final String TIMER_MAIN = "timer://harvest";
+    private static final String TIMER_MAIN = "timer://harvester";
     private static final String QUESTION_SIGN = "?";
     private static final String AND_SIGN = "&";
     private static final String EQUAL_SIGN = "=";
@@ -48,7 +48,8 @@ public class TimerRoute extends RouteBuilder {
         from(DIRECT_MAIN)
                 .routeId(ROUTE_ID_MAIN)
                 .id(ROUTE_ID_MAIN)
-                .log(LoggingLevel.INFO, LOGGER, "Got time event...");
+                .log(LoggingLevel.INFO, LOGGER, "Got time event...")
+                .process(new JolokiaProcessor());
     }
 
     /**
