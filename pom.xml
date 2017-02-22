@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.technolords.micro.service</groupId>
-    <artifactId>microservice-jmx-assistant</artifactId>
+    <artifactId>microservice-jolokia-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Technolords :: Microservices :: JMX Assistant</name>
+    <name>Technolords :: Microservices :: Jolokia client</name>
     <description>
         A JMX assistant, suitable to monitor any JVM
     </description>
@@ -42,7 +42,7 @@
         | Source control management
         +-->
     <scm>
-        <connection>scm:git:https://github.com/Technolords/microservice-jmx-assistant</connection>
+        <connection>scm:git:https://github.com/Technolords/microservice-jolokia-client</connection>
         <tag>HEAD</tag>
     </scm>
 
@@ -258,7 +258,7 @@
     </build>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/Technolords/microservice-jmx-assistant/releases</downloadUrl>
+        <downloadUrl>https://github.com/Technolords/microservice-jolokia-client/releases</downloadUrl>
     </distributionManagement>
 
 </project>
