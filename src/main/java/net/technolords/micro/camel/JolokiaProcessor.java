@@ -7,8 +7,11 @@ import org.apache.camel.Processor;
 import org.jolokia.client.BasicAuthenticator;
 import org.jolokia.client.J4pClient;
 import org.jolokia.client.exception.J4pException;
+import org.jolokia.client.request.J4pExecRequest;
+import org.jolokia.client.request.J4pExecResponse;
 import org.jolokia.client.request.J4pReadRequest;
 import org.jolokia.client.request.J4pReadResponse;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,10 +27,19 @@ public class JolokiaProcessor implements Processor {
         String invoker = exchange.getProperty(Exchange.TIMER_NAME, String.class);
         long period = exchange.getProperty(Exchange.TIMER_PERIOD, Long.class);
         LOGGER.info("Timer data -> invoker: {}, period: {} ms", invoker, period);
-        this.executeJolokiaQuery();
+//        this.executeJolokiaReadRequest();
+        this.executeJolokiaExecRequest();
     }
 
-    private void executeJolokiaQuery() throws MalformedObjectNameException, J4pException {
+    private void executeJolokiaExecRequest() throws MalformedObjectNameException, J4pException {
+        J4pClient client = JolokiaClientFactory.createJolokiaClient();
+        J4pExecRequest request = new J4pExecRequest("io.fabric8:type=Fabric", "containers()");
+        J4pExecResponse response = client.execute(request);
+        JSONObject jsonObject = response.asJSONObject();
+        LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
+    }
+
+    private void executeJolokiaReadRequest() throws MalformedObjectNameException, J4pException {
         J4pClient client = JolokiaClientFactory.createJolokiaClient();
         J4pReadRequest request =
                 new J4pReadRequest("java.lang:type=Memory","HeapMemoryUsage");
@@ -35,6 +47,23 @@ public class JolokiaProcessor implements Processor {
         J4pReadResponse response = client.execute(request);
         LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
     }
+
+    /*
+        <query
+            type="exec"
+        >
+            <objectName>io.fabric8:type=Fabric</objectName>
+            <operation>containers()</operation>
+            <assign header="child-containers" type="map">
+                <key filter="map-*">
+                    <expression>meta-data/containerName</expression>
+                </key>
+                <value>
+                    <expression>jolokiaUrl</expression>
+                </value>
+            </assign>
+        </query>
+     */
 
     /*
         logging:

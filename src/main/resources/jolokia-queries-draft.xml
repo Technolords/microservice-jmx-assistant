@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jolokia username="admin" password="admin">
+    
+    <!--+
+        | The parent query is optional. The goal of a parent-query is
+        | determine other local jvm's. Consequence is that all other
+        | queries are reserved for each jvm.
+        +-->
+    <parent-query id="getContainers">
+        <host>http://localhost:8181/jolokia</host>
+        <query>
+            <objectName>io.fabric8:type=Fabric</objectName>
+            <operation>containers()</operation>
+        </query>
+    </parent-query>
+    
+    <query id="getMemoryUsage">
+        <objectName>java.lang:type=Memory</objectName>
+        <attributes>
+            <attribute>HeapMemoryUsage</attribute>
+        </attributes>
+    </query>
+   
+</jolokia>
+
+<!--
+    Total queries: 15
+    
+    query (find child containers):
+        :8181/hawtio/jolokia/exec/io.fabric8:type=Fabric/"containers()"
+        
+        containers() ->
+            [
+                {
+                    "parent" : "root",
+                    "metadata" : {
+                        "containerName":"map-task-server1",
+                        "jolokiaUrl": "http://127.0.0.1:8186/jolokia",
+                    }
+                },
+                {
+                    "parent" : "root",
+                    "metadata" : {
+                        "containerName":"map-service-adapters-cz1",
+                        "jolokiaUrl": "http://127.0.0.1:8184/jolokia",
+                    }
+                },
+                
+        
+    query (find memory usage)
+        ${jolokiaUrls[i]}?p=read/java.lang:type=Memory/HeapMemoryUsage
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric: .request.attribute,
+                used: .value.used,
+                max: .value.max}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (garbage collection)
+        ${jolokiaUrls[i]}?p=read/java.lang:type=GarbageCollector,name=*/CollectionCount,CollectionTime
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"garbageCollector",
+                pcMarkSweepCount:  .value["java.lang:name=PS MarkSweep,type=GarbageCollector"].CollectionCount,
+                pcMarkSweepDuration:  .value["java.lang:name=PS MarkSweep,type=GarbageCollector"].CollectionTime,
+                pcScavengeCount:  .value["java.lang:name=PS Scavenge,type=GarbageCollector"].CollectionCount,
+                pcScavengeDuration:  .value["java.lang:name=PS Scavenge,type=GarbageCollector"].CollectionTime}')
+                
+    query (garbage collection)
+        ${jolokiaUrls[i]}?p=read/java.lang:type=GarbageCollector,name=*/LastGcInfo
+            | jq hostName $hostName environment $environment containerName $containerName nowGcMarkSweepCount $nowGcMarkSweepCount lastGcMarkSweepDuration $lastGcMarkSweepDuration '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"garbageCollector",
+                pcMarkSweepCount: $nowGcMarkSweepCount,
+                pcMarkSweepDuration: $lastGcMarkSweepDuration,
+                pcMarkSweepLastGcInfo:  .value["java.lang:name=PS MarkSweep,type=GarbageCollector"].LastGcInfo}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (garbage collection)
+        ${jolokiaUrls[i]}?p=read/java.lang:type=GarbageCollector,name=*/LastGcInfo
+            | jq hostName $hostName environment $environment containerName $containerName nowGcScavengeCount $nowGcScavengeCount lastGcScavengeDuration $lastGcScavengeDuration '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"garbageCollector",
+                pcScavengeCount: $nowGcScavengeCount,
+                pcScavengeDuration: $lastGcScavengeDuration,
+                pcScavengeLastGcInfo:  .value["java.lang:name=PS Scavenge,type=GarbageCollector"].LastGcInfo}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (jetty thread pools, suitable for CA and WF)
+        POST data '[
+        {
+            "mbean":"org.eclipse.jetty.server:id=*,type=server",
+            "type":"read",
+            "attribute": "contexts",
+            "path":"*/*/*/keyPropertyList/name"
+        },
+        {
+            "mbean":"org.eclipse.jetty.server:id=*,type=server",
+            "type":"read",
+            "attribute": "threadPool",
+            "path":"*/*/canonicalKeyPropertyListString"
+        },
+        {
+            "mbean": "org.eclipse.jetty.util.thread:id=*,type=queuedthreadpool",
+            "type": "read",
+            "attribute": ["threads","idleThreads","maxThreads"]
+        }]'
+        ${jolokiaUrls[i]}
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .[0].timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric: "jettyServerThreadPool", message: .}')
+                
+    query (jetty thread pools, suitable for SA)
+        POST data '[
+        {
+            "mbean":"org.eclipse.jetty.server:id=*,type=server",
+            "type":"read",
+            "attribute":"contexts",
+            "path":"*/*/*/keyPropertyListString"
+        },
+        {
+            "mbean":"org.eclipse.jetty.server:id=*,type=server",
+            "type":"read",
+            "attribute": "threadPool",
+            "path":"*/*/canonicalKeyPropertyListString"
+        },
+        {
+            "mbean":"org.eclipse.jetty.server.handler:name=*,id=*,type=contexthandler",
+            "type":"read",
+            "attribute":"contextPath"
+        },
+        {
+            "mbean": "org.eclipse.jetty.util.thread:id=*,type=queuedthreadpool",
+            "type": "read",
+            "attribute": ["threads","idleThreads","maxThreads"]
+        }]'
+        ${jolokiaUrls[i]}
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .[0].timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric: "bulkJsonResponseSA", message: .}')
+
+    query (seda queue for CA)
+        POST data '[
+        {
+            "mbean":"org.apache.camel:context=com.lgi.map.horizon4-client-adapter,name=\"recipient*\",type=threadpools",
+            "type":"read",
+            "attribute":["ActiveCount","TaskQueueSize","PoolSize","LargestPoolSize","MaximumPoolSize"]
+        },
+        {
+            "mbean":"org.apache.camel:context=com.lgi.map.horizon4-client-adapter,name=\"Seda*\",type=threadpools",
+            "type":"read",
+            "attribute":["ActiveCount","TaskQueueSize","PoolSize","LargestPoolSize","MaximumPoolSize"]
+        }]'
+        ${jolokiaUrls[1]} 
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .[0].timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"SEDAQueueAndRecipientListCA",
+                activeCountRecipientList: .[0].value[].ActiveCount, poolSizeRecipientList: .[0].value[].PoolSize,
+                taskQueueSizeRecipientList: .[0].value[].TaskQueueSize,
+                largestPoolSizeRecipientList: .[0].value[].LargestPoolSize,
+                maximumPoolSizeRecipientList: .[0].value[].MaximumPoolSize,
+                activeCountSEDAQueue: .[1].value[].ActiveCount,
+                poolSizeSEDAQueue: .[1].value[].PoolSize,
+                taskQueueSizeSEDAQueue: .[1].value[].TaskQueueSize,
+                largestPoolSizeSEDAQueue: .[1].value[].LargestPoolSize,
+                maximumPoolSizeSEDAQueue: .[1].value[].MaximumPoolSize}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+
+    query (splitter thread pool for WF)
+        ${jolokiaUrls[2]}?p=read/org.apache.camel:context=com.lgi.map.grid-screen-service,type=threadpools,name=\"split*\"/ActiveCount,TaskQueueSize,PoolSize,LargestPoolSize,MaximumPoolSize
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"gridMESSplitter",
+                activeCount: .value[].ActiveCount,
+                poolSize: .value[].PoolSize,
+                taskQueueSize: .value[].TaskQueueSize,
+                largestPoolSize: .value[].LargestPoolSize,
+                maximumPoolSize: .value[].MaximumPoolSize}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (Traxis seda metrics)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.traxis-service-adapter,type=threadpools,name=*/ActiveCount,TaskQueueSize,PoolSize,LargestPoolSize,MaximumPoolSize
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"SEDAQueueTraxis",
+                taskQueueSize: .value[].TaskQueueSize, activeCount: .value[].ActiveCount,
+                poolSize: .value[].PoolSize,
+                largestPoolSize: .value[].LargestPoolSize,
+                maximumPoolSize: .value[].MaximumPoolSize}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (Reng seda metrics)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.reng-service-adapter,type=threadpools,name=*/ActiveCount,TaskQueueSize,PoolSize,LargestPoolSize,MaximumPoolSize
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"SEDAQueueReng",
+                taskQueueSize: .value[].TaskQueueSize,
+                activeCount: .value[].ActiveCount,
+                poolSize: .value[].PoolSize,
+                largestPoolSize: .value[].LargestPoolSize,
+                maximumPoolSize: .value[].MaximumPoolSize}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (MES seda metrics)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.mes-service-adapter,type=threadpools,name=*/ActiveCount,TaskQueueSize,PoolSize,LargestPoolSize,MaximumPoolSize
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"SEDAQueueMes",
+                taskQueueSize: .value[].TaskQueueSize, activeCount: .value[].ActiveCount,
+                poolSize: .value[].PoolSize,
+                largestPoolSize: .value[].LargestPoolSize,
+                maximumPoolSize: .value[].MaximumPoolSize}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (circuit breaker state Traxis)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.traxis-service-adapter,type=processors,name=*/CircuitBreakerStateAsInt,CircuitBreakerStateAsString
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"CircuitBreakerTraxis",
+                stateIntValue: .value[].CircuitBreakerStateAsInt,
+                stateStringValue: .value[].CircuitBreakerStateAsString}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (circuit breaker state Reng)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.reng-service-adapter,type=processors,name=*/CircuitBreakerStateAsInt,CircuitBreakerStateAsString
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"CircuitBreakerReng",
+                stateIntValue: .value[].CircuitBreakerStateAsInt, stateStringValue: .value[].CircuitBreakerStateAsString}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+            
+    query (circuit breaker state MES)
+        ${jolokiaUrls[i]}?p=read/org.apache.camel:context=com.lgi.map.mes-service-adapter,type=processors,name=*/CircuitBreakerStateAsInt,CircuitBreakerStateAsString
+            | jq hostName $hostName environment $environment containerName $containerName '.
+            | {
+                timeStamp: .timestamp,
+                environment: $environment,
+                host: $hostName,
+                container: $containerName,
+                metric:"CircuitBreakerMes",
+                stateIntValue: .value[].CircuitBreakerStateAsInt,
+                stateStringValue: .value[].CircuitBreakerStateAsString}'
+            | tr '\n' ' ' >> $outputFile && echo "" >> $outputFile
+    -->
