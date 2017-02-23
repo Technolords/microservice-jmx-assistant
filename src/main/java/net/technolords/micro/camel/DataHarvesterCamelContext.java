@@ -1,8 +1,13 @@
 package net.technolords.micro.camel;
 
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+
 import org.apache.camel.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import net.technolords.micro.registry.DataHarvestRegistry;
 
@@ -14,7 +19,7 @@ public class DataHarvesterCamelContext extends Main {
     }
 
     @Override
-    public void beforeStart() {
+    public void beforeStart() throws JAXBException, IOException, SAXException {
         LOGGER.info("Before start called...");
         DataHarvestRegistry.registerBeansInRegistryBeforeStart();
         super.addRouteBuilder(new TimerRoute());
@@ -24,7 +29,7 @@ public class DataHarvesterCamelContext extends Main {
     public void afterStart() {
         LOGGER.info("After start called...");
         DataHarvestRegistry.registerBeansInRegistryAfterStart();
-        LOGGER.info("JMX assistant service started ({}), use CTRL-C to terminate JVM", DataHarvestRegistry.findBuildMetaData());
+        LOGGER.info("Jolokia client service started ({}), use CTRL-C to terminate JVM", DataHarvestRegistry.findBuildMetaData());
     }
 
     /**
@@ -47,7 +52,7 @@ public class DataHarvesterCamelContext extends Main {
      *  When the program fails.
      */
     public static void main(String[] args) throws Exception {
-        LOGGER.info("About to start the JMX assistant...");
+        LOGGER.info("About to start the Jolokia client...");
         DataHarvesterCamelContext dataHarvesterCamelContext = new DataHarvesterCamelContext();
         dataHarvesterCamelContext.startService();
     }

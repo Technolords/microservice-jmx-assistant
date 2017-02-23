@@ -25,6 +25,7 @@ public class PropertiesManager {
     public static final String PROP_PASSWORD = "password";
     public static final String PROP_PERIOD = "period";
     public static final String PROP_CONNECTION_TIMEOUT = "connection.timeout";
+    public static final String PROP_JOLOKIA_CONFIG = "jolokiaConfig";
 
     /**
      * Auxiliary method that loads properties from an embedded file. This file is dynamically updated during each

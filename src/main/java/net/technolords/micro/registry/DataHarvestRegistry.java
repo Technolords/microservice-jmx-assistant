@@ -3,19 +3,24 @@ package net.technolords.micro.registry;
 import static net.technolords.micro.config.PropertiesManager.PROP_BUILD_DATE;
 import static net.technolords.micro.config.PropertiesManager.PROP_BUILD_VERSION;
 
+import java.io.IOException;
 import java.util.Properties;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.camel.main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXException;
 
 import net.technolords.micro.config.PropertiesManager;
+import net.technolords.micro.model.ModelManager;
 
 public class DataHarvestRegistry {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataHarvestRegistry.class);
     private static final String BEAN_PROPERTIES = "props";
     private static final String BEAN_META_DATA_PROPERTIES = "propsMetaData";
-    private static final String BEAN_CONFIG = "config";
+    private static final String BEAN_MODEL = "model";
     private static Main main;
 
     /**
@@ -30,12 +35,17 @@ public class DataHarvestRegistry {
         main.bind(BEAN_PROPERTIES, PropertiesManager.extractProperties());
     }
 
-    public static void registerBeansInRegistryBeforeStart() {
-
+    public static void registerBeansInRegistryBeforeStart() throws JAXBException, IOException, SAXException {
+        main.bind(BEAN_MODEL, new ModelManager(findConfiguredJolokiaConfiguration()));
+        LOGGER.info("Beans added to the registry...");
     }
 
     public static void registerBeansInRegistryAfterStart() {
 
+    }
+
+    public static ModelManager findModelManager() {
+        return main.lookup(BEAN_MODEL, ModelManager.class);
     }
 
     public static Properties findProperties() {
@@ -65,6 +75,10 @@ public class DataHarvestRegistry {
             }
         }
         return value;
+    }
+
+    public static String findConfiguredJolokiaConfiguration() {
+        return (String) findProperties().get(PropertiesManager.PROP_JOLOKIA_CONFIG);
     }
 
     public static String findBuildMetaData() {

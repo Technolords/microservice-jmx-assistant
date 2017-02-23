@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns="http://xsd.technolords.net"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://xsd.technolords.net"
+    elementFormDefault="qualified"
+>
+    
+    <!--+
+        | Root element
+        +-->
+    <xs:element name="jolokia">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parent-query" type="parentQueryType" minOccurs="0" maxOccurs="1" />
+                <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <!--+
+        | Simple types, sorted by alphabet
+        +-->
+    
+    <!--+
+        | Complex types, sorted by alphabet
+        +-->
+    <xs:complexType name="attributesType">
+        <xs:sequence>
+            <xs:element name="attribute" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+        
+    <xs:complexType name="hostType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="username" type="xs:string" use="required" />
+                <xs:attribute name="password" type="xs:string" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="parentQueryType">
+        <xs:sequence>
+            <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="queryType">
+        <xs:sequence>
+            <xs:element name="host" type="hostType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="objectName" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="operation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="attributes" type="attributesType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>   
+        <xs:attribute name="id" type="xs:string" use="required" />
+    </xs:complexType>
+    
+</xs:schema>

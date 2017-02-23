@@ -21,3 +21,4 @@ public class JolokiaManager {
         return "";
     }
 }
+// /etc/microservices/jolokia/microservice-jolokia.jar
