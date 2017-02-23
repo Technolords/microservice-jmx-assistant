@@ -61,8 +61,6 @@ public class ModelManager {
         LOGGER.info("About to initialize the configuration...");
         Unmarshaller unmarshaller = JAXBContext.newInstance(JolokiaConfiguration.class).createUnmarshaller();
         this.jolokiaConfiguration = (JolokiaConfiguration) unmarshaller.unmarshal(inputStream);
-        LOGGER.info("... done");
-//        LOGGER.debug("Total loaded resources: {}", this.configurations.getConfigurations().size());
-//        LOGGER.info("... done, URL mappings parsed [{} for POST, {} for GET]", this.postConfigurations.size(), this.getConfigurations.size());
+        LOGGER.info("... done, total queries: {}", this.jolokiaConfiguration.getJolokiaQueries().size());
     }
 }

@@ -9,7 +9,6 @@ import org.apache.camel.spi.ShutdownStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.technolords.micro.jolokia.JolokiaManager;
 import net.technolords.micro.registry.DataHarvestRegistry;
 
 public class TimerRoute extends RouteBuilder {
@@ -26,7 +25,6 @@ public class TimerRoute extends RouteBuilder {
     private static final String EQUAL_SIGN = "=";
     private static final String TRUE_VALUE = "true";
     private String period = null;
-    private JolokiaManager jolokiaManager = new JolokiaManager();
 
     public TimerRoute() {
         this.period = DataHarvestRegistry.findConfiguredPeriod();
@@ -63,8 +61,6 @@ public class TimerRoute extends RouteBuilder {
                 .routeId(ROUTE_ID_MAIN)
                 .id(ROUTE_ID_MAIN)
                 .log(LoggingLevel.INFO, LOGGER, "Got time event...")
-                .setHeader(JolokiaManager.GENERATE_RECIPIENT_LIST, constant(true))
-                .bean(this.jolokiaManager)
                 .to(DIRECT_JOLOKIA);
 
         from(DIRECT_JOLOKIA)

@@ -11,14 +11,11 @@ public class JolokiaClientFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaClientFactory.class);
     private static final int DEFAULT_CONNECTION_TIMEOUT = 3000;
 
-    public static J4pClient createJolokiaClient() {
+    public static J4pClient createJolokiaClient(String username, String password, String host) {
         J4pClient client;
-        String username = DataHarvestRegistry.findConfiguredUsername();
-        LOGGER.debug("Configured username: {}", username);
         if (username != null) {
-            String password = DataHarvestRegistry.findConfiguredPassword();
             client = J4pClient
-                    .url("http://localhost:8185/jolokia")
+                    .url(host)
                     .user(username)
                     .password(password)
                     .authenticator(new BasicAuthenticator().preemptive())
@@ -26,7 +23,7 @@ public class JolokiaClientFactory {
                     .build();
         } else {
             client = J4pClient.
-                    url("http://localhost:8185/jolokia")
+                    url(host)
                     .connectionTimeout(getConnectionTimeout())
                     .build();
         }
