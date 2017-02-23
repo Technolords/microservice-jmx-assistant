@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jolokia xmlns="http://xsd.technolords.net">
+
+    <!--+
+        | Test case with multiple queries
+        +-->
+    <query id="getMemoryUsage">
+        <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+        <objectName>java.lang:type=Memory</objectName>
+        <attributes>
+            <attribute>HeapMemoryUsage</attribute>
+        </attributes>
+    </query>
+
+    <query id="getVmName">
+        <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+        <objectName>java.lang:type=Runtime</objectName>
+        <attributes>
+            <attribute>VmName</attribute>
+        </attributes>
+    </query>
+
+</jolokia>

@@ -21,12 +21,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import net.technolords.micro.model.jaxb.Jolokia;
+import net.technolords.micro.model.jaxb.JolokiaConfiguration;
 
 public class ModelManager {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String PATH_TO_SCHEMA_FILE = "xsd/jolokia.xsd";
-    private Jolokia jolokiaConfiguration;
+    private JolokiaConfiguration jolokiaConfiguration;
 
     public ModelManager(String pathToJolokiaConfig) throws IOException, JAXBException, SAXException {
         InputStream inputStreamForValidation, inputStreamForConfig; // Streams can be read only once
@@ -42,6 +42,10 @@ public class ModelManager {
         this.initializeConfiguration(inputStreamForConfig);
     }
 
+    public JolokiaConfiguration getJolokiaConfiguration() {
+        return this.jolokiaConfiguration;
+    }
+
     private void validateConfigurationFile(InputStream inputStream) throws IOException, SAXException {
         LOGGER.info("About to validate the configuration...");
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -55,8 +59,8 @@ public class ModelManager {
 
     protected void initializeConfiguration(InputStream inputStream) throws JAXBException {
         LOGGER.info("About to initialize the configuration...");
-        Unmarshaller unmarshaller = JAXBContext.newInstance(Jolokia.class).createUnmarshaller();
-        this.jolokiaConfiguration = (Jolokia) unmarshaller.unmarshal(inputStream);
+        Unmarshaller unmarshaller = JAXBContext.newInstance(JolokiaConfiguration.class).createUnmarshaller();
+        this.jolokiaConfiguration = (JolokiaConfiguration) unmarshaller.unmarshal(inputStream);
         LOGGER.info("... done");
 //        LOGGER.debug("Total loaded resources: {}", this.configurations.getConfigurations().size());
 //        LOGGER.info("... done, URL mappings parsed [{} for POST, {} for GET]", this.postConfigurations.size(), this.getConfigurations.size());

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jolokia xmlns="http://xsd.technolords.net">
+
+    <!--+
+        | Test case with single query
+        +-->
+    <query id="getMemoryUsage">
+        <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+        <objectName>java.lang:type=Memory</objectName>
+        <attributes>
+            <attribute>HeapMemoryUsage</attribute>
+        </attributes>
+    </query>
+
+</jolokia>
