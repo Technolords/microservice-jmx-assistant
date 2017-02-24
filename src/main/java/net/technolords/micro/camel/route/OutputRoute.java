@@ -2,12 +2,14 @@ package net.technolords.micro.camel.route;
 
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Predicate;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.technolords.micro.camel.predicate.OutputFilePredicate;
 import net.technolords.micro.camel.predicate.OutputRedisPredicate;
+import net.technolords.micro.camel.processor.LogProcessor;
 
 public class OutputRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -18,6 +20,7 @@ public class OutputRoute extends RouteBuilder {
     public static final String ROUTE_ENDPOINT = "direct:output";
     private Predicate filePredicate = new OutputFilePredicate();
     private Predicate redisPredicate = new OutputRedisPredicate();
+    private Processor logProcessor = new LogProcessor();
 
     @Override
     public void configure() throws Exception {
@@ -35,7 +38,7 @@ public class OutputRoute extends RouteBuilder {
                     .id(MARKER_FOR_REDIS)
                 .otherwise()
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to log..")
-                    .to("mock:output")
+                    .process(this.logProcessor)
                     .id(MARKER_FOR_LOG);
     }
 }

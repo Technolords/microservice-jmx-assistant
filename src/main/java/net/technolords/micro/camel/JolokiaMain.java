@@ -16,6 +16,7 @@ import net.technolords.micro.registry.JolokiaRegistry;
 public class JolokiaMain extends Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaMain.class);
     public static final String PROPERTY_OUTPUT = "output";
+    public static final String HEADER_RESPONSE = "response";
 
     public JolokiaMain() {
         JolokiaRegistry.registerPropertiesInRegistry(this);
