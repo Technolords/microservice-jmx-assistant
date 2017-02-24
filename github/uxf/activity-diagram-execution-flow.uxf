@@ -386,16 +386,18 @@ new message and set:
     <id>UMLNote</id>
     <coordinates>
       <x>870</x>
-      <y>440</y>
-      <w>240</w>
-      <h>110</h>
+      <y>420</y>
+      <w>290</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>bg=gray
 from("direct:split")
   split()
      method("bean")
      parallelProcessing()
-     to("direct:main")</panel_attributes>
+     to("direct:main")
+
+http://camel.apache.org/splitter.html</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

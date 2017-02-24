@@ -1,7 +1,6 @@
 package net.technolords.micro.camel.route;
 
 import org.apache.camel.EndpointInject;
-import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
@@ -54,12 +53,10 @@ public class OutputRouteTest extends CamelTestSupport {
                 super.weaveById(OutputRoute.MARKER_FOR_FILE).replace().to(MOCK_FILE_OUTPUT);
             }
         });
-        this.mockFile.expectedMessageCount(1);
-        this.mockRedis.expectedMessageCount(0);
-        this.mockLog.expectedMessageCount(0);
+        this.setExpectedMessageCount(1, 0, 0);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
-        Exchange response = producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
+        producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
             Output output = new Output();
             output.setFileOutput(new FileOutput());
             exchange.setProperty(JolokiaMain.PROPERTY_OUTPUT, output);
@@ -81,12 +78,10 @@ public class OutputRouteTest extends CamelTestSupport {
                 super.weaveById(OutputRoute.MARKER_FOR_REDIS).replace().to(MOCK_REDIS_OUTPUT);
             }
         });
-        this.mockFile.expectedMessageCount(0);
-        this.mockRedis.expectedMessageCount(1);
-        this.mockLog.expectedMessageCount(0);
+        this.setExpectedMessageCount(0, 1, 0);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
-        Exchange response = producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
+        producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
             Output output = new Output();
             output.setRedisOutput(new RedisOutput());
             exchange.setProperty(JolokiaMain.PROPERTY_OUTPUT, output);
@@ -108,12 +103,10 @@ public class OutputRouteTest extends CamelTestSupport {
                 super.weaveById(OutputRoute.MARKER_FOR_LOG).replace().to(MOCK_LOG_OUTPUT);
             }
         });
-        this.mockFile.expectedMessageCount(0);
-        this.mockRedis.expectedMessageCount(0);
-        this.mockLog.expectedMessageCount(1);
+        this.setExpectedMessageCount(0, 0, 1);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
-        Exchange response = producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
+        producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
             Output output = new Output();
             output.setLogOutput(new LogOutput());
             exchange.setProperty(JolokiaMain.PROPERTY_OUTPUT, output);
@@ -135,16 +128,20 @@ public class OutputRouteTest extends CamelTestSupport {
                 super.weaveById(OutputRoute.MARKER_FOR_LOG).replace().to(MOCK_LOG_OUTPUT);
             }
         });
-        this.mockFile.expectedMessageCount(0);
-        this.mockRedis.expectedMessageCount(0);
-        this.mockLog.expectedMessageCount(1);
+        this.setExpectedMessageCount(0, 0, 1);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
-        Exchange response = producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
+        producerTemplate.request(OutputRoute.ROUTE_ENDPOINT, exchange -> {
             // Nothing to set, as it is default
         });
         // Validate
         this.assertOnMockedEndpoints();
+    }
+
+    private void setExpectedMessageCount(int mockFileCount, int mockRedisCount, int mockLogCount) {
+        this.mockFile.expectedMessageCount(mockFileCount);
+        this.mockRedis.expectedMessageCount(mockRedisCount);
+        this.mockLog.expectedMessageCount(mockLogCount);
     }
 
     private void assertOnMockedEndpoints() throws InterruptedException {
