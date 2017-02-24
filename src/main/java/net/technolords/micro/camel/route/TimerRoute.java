@@ -1,11 +1,8 @@
 package net.technolords.micro.camel.route;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.spi.ShutdownStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
