@@ -13,9 +13,9 @@ import net.technolords.micro.registry.JolokiaRegistry;
 public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String DEFAULT_PERIOD = "10s";
-    public static final String ROUTE_ID_TIMER = "RouteTimer";
-    public static final String ROUTE_ID_MAIN = "RouteMain";
-    public static final String ROUTE_ID_JOLOKIA = "RouteJolokia";
+    public static final String ROUTE_ID_TIMER = "routeTimer";
+    public static final String ROUTE_ID_MAIN = "routeMain";
+    public static final String ROUTE_ID_JOLOKIA = "routeJolokia";
     private static final String DIRECT_MAIN = "direct:main";
     private static final String DIRECT_JOLOKIA = "direct:jolokia";
     private static final String TIMER_MAIN = "timer://harvester";

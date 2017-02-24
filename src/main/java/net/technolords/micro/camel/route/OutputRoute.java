@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 
 import net.technolords.micro.camel.predicate.OutputFilePredicate;
 import net.technolords.micro.camel.predicate.OutputRedisPredicate;
+import net.technolords.micro.camel.processor.FileProcessor;
 import net.technolords.micro.camel.processor.LogProcessor;
+import net.technolords.micro.camel.processor.RedisProcessor;
 
 public class OutputRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -20,6 +22,8 @@ public class OutputRoute extends RouteBuilder {
     public static final String ROUTE_ENDPOINT = "direct:output";
     private Predicate filePredicate = new OutputFilePredicate();
     private Predicate redisPredicate = new OutputRedisPredicate();
+    private Processor fileProcessor = new FileProcessor();
+    private Processor redisProcessor = new RedisProcessor();
     private Processor logProcessor = new LogProcessor();
 
     @Override
@@ -30,11 +34,11 @@ public class OutputRoute extends RouteBuilder {
             .choice()
                 .when(this.filePredicate)
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to file...")
-                    .process(this.logProcessor)     // TODO: replace
+                    .process(this.fileProcessor)
                     .id(MARKER_FOR_FILE)
                 .when(this.redisPredicate)
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to redis...")
-                    .process(this.logProcessor)     // TODO: replace
+                    .process(this.redisProcessor)
                     .id(MARKER_FOR_REDIS)
                 .otherwise()
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to log..")
