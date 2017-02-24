@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import net.technolords.micro.model.jaxb.Host;
 import net.technolords.micro.model.jaxb.JolokiaQuery;
-import net.technolords.micro.registry.DataHarvestRegistry;
+import net.technolords.micro.registry.JolokiaRegistry;
 
 public class JolokiaClientFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaClientFactory.class);
@@ -53,7 +53,7 @@ public class JolokiaClientFactory {
     }
 
     private static int getConnectionTimeout() {
-        int connectionTimeout = DataHarvestRegistry.findConnectionTimeout();
+        int connectionTimeout = JolokiaRegistry.findConnectionTimeout();
         if (connectionTimeout == -1) {
             connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
         }

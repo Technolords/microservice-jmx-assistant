@@ -27,7 +27,7 @@ public class JolokiaQueryFactory {
     private static J4pRequest createReadRequest(JolokiaQuery jolokiaQuery) throws MalformedObjectNameException {
         ObjectName objectName = jolokiaQuery.getObjectName();
         Attribute attribute = getAttribute(jolokiaQuery.getAttributes());
-        J4pReadRequest readRequest = new J4pReadRequest(objectName.getObjectName(),attribute.getAttribute());
+        J4pReadRequest readRequest = new J4pReadRequest(objectName.getObjectName(), attribute.getAttribute());
         return readRequest;
     }
 

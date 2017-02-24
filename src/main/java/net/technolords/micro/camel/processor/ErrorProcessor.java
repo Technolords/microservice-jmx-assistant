@@ -1,4 +1,4 @@
-package net.technolords.micro.camel;
+package net.technolords.micro.camel.processor;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;

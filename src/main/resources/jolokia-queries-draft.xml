@@ -8,9 +8,10 @@
         file
             <file mode="append">/tmp/sample</file>
         redis
+            <redis port="6379">172.30.65.216</redis>
         -->
     <output>
-        <log/>
+        <file mode="append">/tmp/sample</file>
     </output>
     
     <!--+

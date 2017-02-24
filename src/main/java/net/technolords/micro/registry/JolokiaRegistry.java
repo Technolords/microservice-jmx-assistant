@@ -16,8 +16,8 @@ import org.xml.sax.SAXException;
 import net.technolords.micro.config.PropertiesManager;
 import net.technolords.micro.model.ModelManager;
 
-public class DataHarvestRegistry {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataHarvestRegistry.class);
+public class JolokiaRegistry {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaRegistry.class);
     private static final String BEAN_PROPERTIES = "props";
     private static final String BEAN_META_DATA_PROPERTIES = "propsMetaData";
     private static final String BEAN_MODEL = "model";

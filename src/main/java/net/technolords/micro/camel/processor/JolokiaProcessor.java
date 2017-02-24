@@ -1,4 +1,4 @@
-package net.technolords.micro.camel;
+package net.technolords.micro.camel.processor;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import net.technolords.micro.jolokia.JolokiaQueryFactory;
 import net.technolords.micro.model.ModelManager;
 import net.technolords.micro.model.jaxb.JolokiaConfiguration;
 import net.technolords.micro.model.jaxb.JolokiaQuery;
-import net.technolords.micro.registry.DataHarvestRegistry;
+import net.technolords.micro.registry.JolokiaRegistry;
 
 public class JolokiaProcessor implements Processor {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -36,7 +36,7 @@ public class JolokiaProcessor implements Processor {
 
     private void executeJolokiaQueries() {
         if (this.modelManager == null) {
-            this.modelManager = DataHarvestRegistry.findModelManager();
+            this.modelManager = JolokiaRegistry.findModelManager();
         }
         JolokiaConfiguration jolokiaConfiguration = this.modelManager.getJolokiaConfiguration();
         List<JolokiaQuery> jolokiaQueries = jolokiaConfiguration.getJolokiaQueries();

@@ -1,4 +1,4 @@
-package net.technolords.micro.camel;
+package net.technolords.micro.camel.route;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +9,9 @@ import org.apache.camel.spi.ShutdownStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.technolords.micro.registry.DataHarvestRegistry;
+import net.technolords.micro.camel.processor.ErrorProcessor;
+import net.technolords.micro.camel.processor.JolokiaProcessor;
+import net.technolords.micro.registry.JolokiaRegistry;
 
 public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -27,7 +29,7 @@ public class TimerRoute extends RouteBuilder {
     private String period = null;
 
     public TimerRoute() {
-        this.period = DataHarvestRegistry.findConfiguredPeriod();
+        this.period = JolokiaRegistry.findConfiguredPeriod();
         if (this.period == null || this.period.isEmpty()) {
             this.period = DEFAULT_PERIOD;
         }

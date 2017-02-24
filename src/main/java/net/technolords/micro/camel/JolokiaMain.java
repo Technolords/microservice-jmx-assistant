@@ -9,27 +9,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import net.technolords.micro.registry.DataHarvestRegistry;
+import net.technolords.micro.camel.listener.JolokiaMainListener;
+import net.technolords.micro.camel.route.TimerRoute;
+import net.technolords.micro.registry.JolokiaRegistry;
 
-public class DataHarvesterCamelContext extends Main {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataHarvesterCamelContext.class);
+public class JolokiaMain extends Main {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaMain.class);
 
-    public DataHarvesterCamelContext() {
-        DataHarvestRegistry.registerPropertiesInRegistry(this);
+    public JolokiaMain() {
+        JolokiaRegistry.registerPropertiesInRegistry(this);
     }
 
     @Override
     public void beforeStart() throws JAXBException, IOException, SAXException {
         LOGGER.info("Before start called...");
-        DataHarvestRegistry.registerBeansInRegistryBeforeStart();
+        JolokiaRegistry.registerBeansInRegistryBeforeStart();
+        super.addMainListener(new JolokiaMainListener());
         super.addRouteBuilder(new TimerRoute());
     }
 
     @Override
     public void afterStart() {
         LOGGER.info("After start called...");
-        DataHarvestRegistry.registerBeansInRegistryAfterStart();
-        LOGGER.info("Jolokia client service started ({}), use CTRL-C to terminate JVM", DataHarvestRegistry.findBuildMetaData());
+        JolokiaRegistry.registerBeansInRegistryAfterStart();
+        LOGGER.info("Jolokia client as service started ({}), use CTRL-C to terminate JVM", JolokiaRegistry.findBuildMetaData());
     }
 
     /**
@@ -53,7 +56,7 @@ public class DataHarvesterCamelContext extends Main {
      */
     public static void main(String[] args) throws Exception {
         LOGGER.info("About to start the Jolokia client...");
-        DataHarvesterCamelContext dataHarvesterCamelContext = new DataHarvesterCamelContext();
-        dataHarvesterCamelContext.startService();
+        JolokiaMain jolokiaMain = new JolokiaMain();
+        jolokiaMain.startService();
     }
 }

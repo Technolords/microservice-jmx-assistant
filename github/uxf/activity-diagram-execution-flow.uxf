@@ -4,8 +4,8 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>260</x>
-      <y>190</y>
+      <x>170</x>
+      <y>270</y>
       <w>110</w>
       <h>40</h>
     </coordinates>
@@ -16,8 +16,8 @@ queries</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>230</x>
-      <y>80</y>
+      <x>140</x>
+      <y>160</y>
       <w>100</w>
       <h>130</h>
     </coordinates>
@@ -27,8 +27,8 @@ queries</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>220</y>
+      <x>210</x>
+      <y>300</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -38,8 +38,8 @@ queries</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>270</x>
-      <y>660</y>
+      <x>180</x>
+      <y>740</y>
       <w>40</w>
       <h>30</h>
     </coordinates>
@@ -50,8 +50,8 @@ yes</panel_attributes>
   <element>
     <id>UMLTimer</id>
     <coordinates>
-      <x>200</x>
-      <y>70</y>
+      <x>110</x>
+      <y>150</y>
       <w>80</w>
       <h>90</h>
     </coordinates>
@@ -63,8 +63,8 @@ every 60s</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>250</x>
-      <y>290</y>
+      <x>160</x>
+      <y>370</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -75,8 +75,8 @@ host</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>250</x>
-      <y>390</y>
+      <x>160</x>
+      <y>470</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -87,8 +87,8 @@ query</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>320</y>
+      <x>210</x>
+      <y>400</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -98,8 +98,8 @@ query</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>290</x>
-      <y>620</y>
+      <x>200</x>
+      <y>700</y>
       <w>40</w>
       <h>40</h>
     </coordinates>
@@ -109,8 +109,8 @@ query</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>250</x>
-      <y>490</y>
+      <x>160</x>
+      <y>570</y>
       <w>130</w>
       <h>60</h>
     </coordinates>
@@ -122,8 +122,8 @@ result</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>250</x>
-      <y>720</y>
+      <x>160</x>
+      <y>800</y>
       <w>130</w>
       <h>40</h>
     </coordinates>
@@ -134,8 +134,8 @@ results</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>420</y>
+      <x>210</x>
+      <y>500</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -145,8 +145,8 @@ results</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>540</y>
+      <x>210</x>
+      <y>620</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -156,8 +156,8 @@ results</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>220</x>
-      <y>550</y>
+      <x>130</x>
+      <y>630</y>
       <w>90</w>
       <h>40</h>
     </coordinates>
@@ -169,8 +169,8 @@ executed?</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>320</x>
-      <y>400</y>
+      <x>230</x>
+      <y>480</y>
       <w>150</w>
       <h>260</h>
     </coordinates>
@@ -180,8 +180,8 @@ executed?</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>330</x>
-      <y>610</y>
+      <x>240</x>
+      <y>690</y>
       <w>40</w>
       <h>30</h>
     </coordinates>
@@ -192,8 +192,8 @@ no</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>650</y>
+      <x>210</x>
+      <y>730</y>
       <w>30</w>
       <h>90</h>
     </coordinates>
@@ -203,8 +203,8 @@ no</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>750</y>
+      <x>210</x>
+      <y>830</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -214,8 +214,8 @@ no</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>290</x>
-      <y>830</y>
+      <x>200</x>
+      <y>910</y>
       <w>40</w>
       <h>40</h>
     </coordinates>
@@ -225,8 +225,8 @@ no</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>310</x>
-      <y>770</y>
+      <x>220</x>
+      <y>850</y>
       <w>110</w>
       <h>40</h>
     </coordinates>
@@ -237,8 +237,8 @@ is parent?</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>860</y>
+      <x>210</x>
+      <y>940</y>
       <w>30</w>
       <h>100</h>
     </coordinates>
@@ -248,8 +248,8 @@ is parent?</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>310</x>
-      <y>870</y>
+      <x>220</x>
+      <y>950</y>
       <w>40</w>
       <h>30</h>
     </coordinates>
@@ -260,8 +260,8 @@ no</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>300</x>
-      <y>940</y>
+      <x>210</x>
+      <y>1020</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -271,8 +271,8 @@ no</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>160</x>
-      <y>300</y>
+      <x>70</x>
+      <y>380</y>
       <w>150</w>
       <h>570</h>
     </coordinates>
@@ -282,13 +282,162 @@ no</panel_attributes>
   <element>
     <id>Text</id>
     <coordinates>
-      <x>240</x>
-      <y>820</y>
+      <x>150</x>
+      <y>900</y>
       <w>40</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>style=wordwrap
 yes</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>520</x>
+      <y>320</y>
+      <w>240</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>bg=gray
+from("timer:x")
+  to("direct:prepare")</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>520</x>
+      <y>440</y>
+      <w>290</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>bg=gray
+from("direct:prepare")
+  to("process:prepare")
+  choice()
+     when(list &gt; 0)
+        to("direct:split")
+     otherwise()
+        log()
+
+prepare:
+ - determine parent query
+ - determine output type
+ 
+JVM's are known: null or List&lt;String&gt;
+- parallel execution for JVM's?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>870</x>
+      <y>750</y>
+      <w>290</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>bg=gray
+from("direct:output")
+  choice()
+    when("header == file")
+      to("direct:outputFile")
+    when(redis)
+      to("direct:redis")
+    otherwise
+      to("direct:outputLog)
+     
+Implement predicate
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>530</x>
+      <y>750</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>bg=gray
+from("direct:main")
+  to("process:queries")
+  to("direct:output")</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>870</x>
+      <y>580</y>
+      <w>360</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>bg=blue
+during split, create
+new message and set:
+
+- exchange prop: output
+- exchange header: host
+- exchange header: list of queries</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>870</x>
+      <y>440</y>
+      <w>240</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>bg=gray
+from("direct:split")
+  split()
+     method("bean")
+     parallelProcessing()
+     to("direct:main")</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>870</x>
+      <y>280</y>
+      <w>330</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>bg=blue
+prepare:
+exchange prop: output
+exchange header: list of targets (jvm's)
+
+ List&lt;Host, List&lt;JolokiaQuery&gt;&gt;
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>340</x>
+      <y>0</y>
+      <w>470</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>&lt;parent-query&gt;
+        &lt;query id="getContainers"&gt;
+            &lt;host username="admin" password="admin"&gt;http://localhost:8181/jolokia&lt;/host&gt;
+            &lt;objectName&gt;io.fabric8:type=Fabric&lt;/objectName&gt;
+            &lt;operation&gt;containers()&lt;/operation&gt;
+        &lt;/query&gt;
+    &lt;/parent-query&gt;
+    
+    &lt;query id="getMemoryUsage"&gt;
+        &lt;!-- host is optional, but only when a parent is present --&gt;
+        &lt;objectName&gt;java.lang:type=Memory&lt;/objectName&gt;
+        &lt;attributes&gt;
+            &lt;attribute&gt;HeapMemoryUsage&lt;/attribute&gt;
+        &lt;/attributes&gt;
+    &lt;/query&gt;</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

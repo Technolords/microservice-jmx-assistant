@@ -47,13 +47,22 @@
         </xs:simpleContent>
     </xs:complexType>
     
+    <xs:complexType name="outputFileType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="mode" type="fileType" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
     <!--+
         | One of:
         |   <log level="info"/>
         +-->
     <xs:complexType name="outputType">
         <xs:choice>
-            <xs:element name="log"/>
+            <xs:element name="log" />
+            <xs:element name="file" type="outputFileType" />
         </xs:choice>
     </xs:complexType>
     
