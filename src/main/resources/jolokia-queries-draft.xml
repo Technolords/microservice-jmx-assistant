@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jolokia>
+<jolokia xmlns="http://xsd.technolords.net">
+    
+    <!--
+        One of:
+        log
+            <log level="info"/>
+        file
+            <file mode="append">/tmp/sample</file>
+        redis
+        -->
+    <output>
+        <log/>
+    </output>
     
     <!--+
         | The parent query is optional. The goal of a parent-query is
         | determine other local jvm's. Consequence is that all other
         | queries are reserved for each jvm.
         +-->
-    <parent-query id="getContainers">
-        <query>
+    <parent-query>
+        <query id="getContainers">
             <host username="admin" password="admin">http://localhost:8181/jolokia</host>
             <objectName>io.fabric8:type=Fabric</objectName>
             <operation>containers()</operation>

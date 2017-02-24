@@ -12,6 +12,7 @@
     <xs:element name="jolokia">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="output" type="outputType" minOccurs="1" maxOccurs="1" />
                 <xs:element name="parent-query" type="parentQueryType" minOccurs="0" maxOccurs="1" />
                 <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded" />
             </xs:sequence>
@@ -21,6 +22,12 @@
     <!--+
         | Simple types, sorted by alphabet
         +-->
+    <xs:simpleType name="fileType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="append"/>
+            <xs:enumeration value="new"/>
+        </xs:restriction>
+    </xs:simpleType>
     
     <!--+
         | Complex types, sorted by alphabet
@@ -40,11 +47,20 @@
         </xs:simpleContent>
     </xs:complexType>
     
+    <!--+
+        | One of:
+        |   <log level="info"/>
+        +-->
+    <xs:complexType name="outputType">
+        <xs:choice>
+            <xs:element name="log"/>
+        </xs:choice>
+    </xs:complexType>
+    
     <xs:complexType name="parentQueryType">
         <xs:sequence>
             <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="1" />
         </xs:sequence>
-        <xs:attribute name="id" type="xs:string" use="required" />
     </xs:complexType>
     
     <xs:complexType name="queryType">

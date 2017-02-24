@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jolokia xmlns="http://xsd.technolords.net">
 
+    <output>
+        <log/>
+    </output>
+
     <!--+
         | Test case with multiple queries
         +-->
