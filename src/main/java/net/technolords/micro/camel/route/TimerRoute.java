@@ -38,7 +38,6 @@ public class TimerRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        this.updateShutdownStrategy();
 
         onException(Exception.class)
                 .handled(true)
@@ -70,18 +69,6 @@ public class TimerRoute extends RouteBuilder {
                 .id(ROUTE_ID_JOLOKIA)
                 .process(new JolokiaProcessor());
 
-    }
-
-    /**
-     * Auxiliary method which configures the shut down strategy associated with the CamelContext. As result
-     * it will not wait for any in-flight messages to finish longer than 1 second to finish.
-     */
-    private void updateShutdownStrategy() {
-        ShutdownStrategy shutdownStrategy = super.getContext().getShutdownStrategy();
-        shutdownStrategy.setTimeUnit(TimeUnit.SECONDS);
-        shutdownStrategy.setTimeout(1L);
-        shutdownStrategy.setShutdownNowOnTimeout(true);
-        shutdownStrategy.setSuppressLoggingOnTimeout(true);
     }
 
     protected String generateTimerEndpoint() {
