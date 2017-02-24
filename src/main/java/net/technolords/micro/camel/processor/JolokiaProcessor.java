@@ -21,6 +21,7 @@ import net.technolords.micro.model.jaxb.JolokiaConfiguration;
 import net.technolords.micro.model.jaxb.JolokiaQuery;
 import net.technolords.micro.registry.JolokiaRegistry;
 
+@Deprecated
 public class JolokiaProcessor implements Processor {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private ModelManager modelManager;

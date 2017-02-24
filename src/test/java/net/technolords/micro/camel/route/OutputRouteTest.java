@@ -25,13 +25,13 @@ public class OutputRouteTest extends CamelTestSupport {
     private static final String MOCK_LOG_OUTPUT = "mock:logOutput";
 
     @EndpointInject(uri = MOCK_FILE_OUTPUT)
-    private MockEndpoint mockFile;
+    private MockEndpoint mockFile = null;
 
     @EndpointInject(uri = MOCK_REDIS_OUTPUT)
-    private MockEndpoint mockRedis;
+    private MockEndpoint mockRedis = null;
 
     @EndpointInject(uri = MOCK_LOG_OUTPUT)
-    private MockEndpoint mockLog;
+    private MockEndpoint mockLog = null;
 
     @Test
     public void testSetup() {

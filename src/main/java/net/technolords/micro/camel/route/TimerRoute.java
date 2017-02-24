@@ -69,6 +69,8 @@ public class TimerRoute extends RouteBuilder {
 
     }
 
+    // TODO: experiment with short interval and sleep, abort timer?
+
     protected String generateTimerEndpoint() {
         StringBuilder buffer = new StringBuilder();
         // timer://harvest?fixedRate=true&period=10s
