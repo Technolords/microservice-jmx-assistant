@@ -64,7 +64,8 @@ public class TimerRoute extends RouteBuilder {
         from(DIRECT_JOLOKIA)
                 .routeId(ROUTE_ID_JOLOKIA)
                 .id(ROUTE_ID_JOLOKIA)
-                .process(new JolokiaProcessor());
+                .process(new JolokiaProcessor())
+                .to(OutputRoute.ROUTE_ENDPOINT);
 
     }
 

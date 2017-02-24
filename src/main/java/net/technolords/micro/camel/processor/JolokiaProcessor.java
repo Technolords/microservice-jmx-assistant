@@ -13,6 +13,7 @@ import org.jolokia.client.request.J4pResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.technolords.micro.camel.JolokiaMain;
 import net.technolords.micro.jolokia.JolokiaClientFactory;
 import net.technolords.micro.jolokia.JolokiaQueryFactory;
 import net.technolords.micro.model.ModelManager;
@@ -31,10 +32,10 @@ public class JolokiaProcessor implements Processor {
         String invoker = exchange.getProperty(Exchange.TIMER_NAME, String.class);
         long period = exchange.getProperty(Exchange.TIMER_PERIOD, Long.class);
         LOGGER.info("Timer data -> invoker: {}, period: {} ms", invoker, period);
-        this.executeJolokiaQueries();
+        this.executeJolokiaQueries(exchange);
     }
 
-    private void executeJolokiaQueries() {
+    private void executeJolokiaQueries(Exchange exchange) {
         if (this.modelManager == null) {
             this.modelManager = JolokiaRegistry.findModelManager();
         }
@@ -46,7 +47,8 @@ public class JolokiaProcessor implements Processor {
                 J4pClient client = JolokiaClientFactory.findJolokiaClient(jolokiaQuery);
                 J4pRequest request = JolokiaQueryFactory.findJolokiaRequest(jolokiaQuery);
                 J4pResponse response = client.execute(request);
-                LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
+                exchange.getIn().setHeader(JolokiaMain.HEADER_RESPONSE, response);
+//                LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
             } catch (MalformedObjectNameException | J4pException e) {
                 LOGGER.error("Unable to execute query", e);
             }

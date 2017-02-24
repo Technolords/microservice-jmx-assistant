@@ -13,7 +13,7 @@ import net.technolords.micro.camel.processor.LogProcessor;
 
 public class OutputRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private static final String ROUTE_ID = "routeOutput";
+    public static final String ROUTE_ID = "routeOutput";
     public static final String MARKER_FOR_FILE = "outputForFile";
     public static final String MARKER_FOR_REDIS = "outputForRedis";
     public static final String MARKER_FOR_LOG = "outputForLog";
@@ -30,11 +30,11 @@ public class OutputRoute extends RouteBuilder {
             .choice()
                 .when(this.filePredicate)
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to file...")
-                    .to("mock:fileOutput")
+                    .process(this.logProcessor)     // TODO: replace
                     .id(MARKER_FOR_FILE)
                 .when(this.redisPredicate)
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to redis...")
-                    .to("mock:redisOutput")
+                    .process(this.logProcessor)     // TODO: replace
                     .id(MARKER_FOR_REDIS)
                 .otherwise()
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to log..")

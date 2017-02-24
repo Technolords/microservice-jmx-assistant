@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import net.technolords.micro.camel.listener.JolokiaMainListener;
+import net.technolords.micro.camel.route.OutputRoute;
 import net.technolords.micro.camel.route.TimerRoute;
 import net.technolords.micro.registry.JolokiaRegistry;
 
@@ -28,6 +29,7 @@ public class JolokiaMain extends Main {
         JolokiaRegistry.registerBeansInRegistryBeforeStart();
         super.addMainListener(new JolokiaMainListener());
         super.addRouteBuilder(new TimerRoute());
+        super.addRouteBuilder(new OutputRoute());
     }
 
     @Override

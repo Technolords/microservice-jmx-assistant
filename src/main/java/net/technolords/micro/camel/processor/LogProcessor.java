@@ -13,7 +13,7 @@ public class LogProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        J4pResponse response = exchange.getOut().getHeader(JolokiaMain.HEADER_RESPONSE, J4pResponse.class);
+        J4pResponse response = exchange.getIn().getHeader(JolokiaMain.HEADER_RESPONSE, J4pResponse.class);
         // In case of errors, there is no response and thus nothing to 'log'.
         if (response != null) {
             LOGGER.info("Response: {}", response.asJSONObject().toJSONString());
