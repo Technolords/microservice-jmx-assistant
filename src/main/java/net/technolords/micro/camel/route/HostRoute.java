@@ -22,7 +22,7 @@ public class HostRoute extends RouteBuilder {
         from(ROUTE_ENDPOINT)
                 .routeId(ROUTE_ID)
                 .id(ROUTE_ID)
-                .log(LoggingLevel.INFO, LOGGER, "Executing host (splitting by query)...")
+                .log(LoggingLevel.DEBUG, LOGGER, "Executing host (splitting by query)...")
                 .split()
                     .method(this.querySplitter)
                     .removeHeader(JolokiaMain.HEADER_QUERY_CONTEXT)

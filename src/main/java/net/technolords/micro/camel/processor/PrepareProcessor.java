@@ -17,13 +17,13 @@ import net.technolords.micro.model.jaxb.JolokiaQuery;
 import net.technolords.micro.model.jaxb.Output;
 import net.technolords.micro.registry.JolokiaRegistry;
 
-public class PrepareQueryContextProcessor implements Processor {
+public class PrepareProcessor implements Processor {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private ModelManager modelManager;
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        LOGGER.debug("PrepareQueryContextProcessor called...");
+        LOGGER.debug("PrepareProcessor called...");
         if (this.modelManager == null) {
             this.modelManager = JolokiaRegistry.findModelManager();
         }

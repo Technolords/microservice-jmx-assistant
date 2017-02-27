@@ -62,5 +62,13 @@ public class ModelManager {
         Unmarshaller unmarshaller = JAXBContext.newInstance(JolokiaConfiguration.class).createUnmarshaller();
         this.jolokiaConfiguration = (JolokiaConfiguration) unmarshaller.unmarshal(inputStream);
         LOGGER.info("... done, total queries: {}", this.jolokiaConfiguration.getJolokiaQueries().size());
+        // TODO: log properly
+        // validate queries and throw Veto when not valid
+        // else log query pattern:
+        // parent query:
+        //   x
+        // child query:
+        //   y (filter: a)
+        //   z (filter: b)
     }
 }

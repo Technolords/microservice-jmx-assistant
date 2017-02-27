@@ -19,7 +19,7 @@ public class QueryProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        LOGGER.info("QueryProcessor called...");
+        LOGGER.debug("QueryProcessor called...");
         Host host = exchange.getIn().getHeader(JolokiaMain.HEADER_HOST, Host.class);
         JolokiaQuery jolokiaQuery = exchange.getIn().getBody(JolokiaQuery.class);
         if (host != null) {

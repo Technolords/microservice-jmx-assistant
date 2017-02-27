@@ -23,7 +23,6 @@ public class JolokiaMain extends Main {
     public static final String PROPERTY_OUTPUT = "output";
     public static final String HEADER_HOST = "host";
     public static final String HEADER_QUERY_CONTEXT = "queryContext";
-    public static final String HEADER_QUERY = "query";
     public static final String HEADER_RESPONSE = "response";
 
     public JolokiaMain() {
@@ -32,7 +31,7 @@ public class JolokiaMain extends Main {
 
     @Override
     public void beforeStart() throws JAXBException, IOException, SAXException {
-        LOGGER.info("Before start called...");
+        LOGGER.debug("Before start called...");
         JolokiaRegistry.registerBeansInRegistryBeforeStart();
         super.addMainListener(new JolokiaMainListener());
         super.addRouteBuilder(new TimerRoute());
@@ -45,7 +44,7 @@ public class JolokiaMain extends Main {
 
     @Override
     public void afterStart() {
-        LOGGER.info("After start called...");
+        LOGGER.debug("After start called...");
         JolokiaRegistry.registerBeansInRegistryAfterStart();
         LOGGER.info("Jolokia client as service started ({}), use CTRL-C to terminate JVM", JolokiaRegistry.findBuildMetaData());
     }

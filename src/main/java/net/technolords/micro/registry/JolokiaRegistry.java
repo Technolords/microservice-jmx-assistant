@@ -37,7 +37,7 @@ public class JolokiaRegistry {
 
     public static void registerBeansInRegistryBeforeStart() throws JAXBException, IOException, SAXException {
         main.bind(BEAN_MODEL, new ModelManager(findConfiguredJolokiaConfiguration()));
-        LOGGER.info("Beans added to the registry...");
+        LOGGER.debug("Beans added to the registry...");
     }
 
     public static void registerBeansInRegistryAfterStart() {

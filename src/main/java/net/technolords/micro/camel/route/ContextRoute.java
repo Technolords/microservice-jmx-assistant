@@ -22,7 +22,7 @@ public class ContextRoute extends RouteBuilder {
         from(ROUTE_ENDPOINT)
                 .routeId(ROUTE_ID)
                 .id(ROUTE_ID)
-                .log(LoggingLevel.INFO, LOGGER, "Executing context (splitting by host)...")
+                .log(LoggingLevel.DEBUG, LOGGER, "Executing context (splitting by host)...")
                 .split()
                     .method(hostSplitter)
                     .setHeader(JolokiaMain.HEADER_HOST, body())

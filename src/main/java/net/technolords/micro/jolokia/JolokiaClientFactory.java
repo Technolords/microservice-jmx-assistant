@@ -18,7 +18,7 @@ public class JolokiaClientFactory {
 
     public static J4pClient findJolokiaClient(Host host) {
         if (clientMap.containsKey(host.getHost())) {
-            LOGGER.info("Found cached client...");
+            LOGGER.debug("Found cached client...");
             return clientMap.get(host.getHost());
         } else {
             J4pClient client = createJolokiaClient(host);

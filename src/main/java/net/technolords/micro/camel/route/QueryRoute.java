@@ -25,7 +25,7 @@ public class QueryRoute extends RouteBuilder {
         from(ROUTE_ENDPOINT)
                 .routeId(ROUTE_ID)
                 .id(ROUTE_ID)
-                .log(LoggingLevel.INFO, LOGGER, "Executing query...")
+                .log(LoggingLevel.DEBUG, LOGGER, "Executing query...")
                 .process(this.queryProcessor)
                 .to(OutputRoute.ROUTE_ENDPOINT);
     }

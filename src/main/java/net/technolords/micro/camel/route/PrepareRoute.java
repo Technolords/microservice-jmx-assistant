@@ -6,7 +6,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.technolords.micro.camel.processor.PrepareQueryContextProcessor;
+import net.technolords.micro.camel.processor.PrepareProcessor;
 
 /**
  * The responsibility of this route is to create a query context. In order to determine
@@ -19,14 +19,14 @@ public class PrepareRoute extends RouteBuilder {
     public static final String ROUTE_ID = "routePrepare";
     public static final String ROUTE_ENDPOINT = "direct:prepare";
     public static final String MARKER_FOR_CONTEXT_ROUTE = "markerForContextRoute";
-    private Processor prepareQueryContextProcessor = new PrepareQueryContextProcessor();
+    private Processor prepareQueryContextProcessor = new PrepareProcessor();
 
     @Override
     public void configure() throws Exception {
         from(ROUTE_ENDPOINT)
                 .routeId(ROUTE_ID)
                 .id(ROUTE_ID)
-                .log(LoggingLevel.INFO, LOGGER, "Preparing context...")
+                .log(LoggingLevel.DEBUG, LOGGER, "Preparing context...")
                 .process(this.prepareQueryContextProcessor)
                 .to(ContextRoute.ROUTE_ENDPOINT)
                 .id(MARKER_FOR_CONTEXT_ROUTE);

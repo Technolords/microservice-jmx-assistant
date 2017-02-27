@@ -13,7 +13,7 @@ public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String DEFAULT_PERIOD = "10s";
     public static final String ROUTE_ID_TIMER = "routeTimer";
-    private static final String TIMER_MAIN = "timer://harvester";
+    private static final String TIMER_MAIN = "timer://queryTimer";
     private static final String QUESTION_SIGN = "?";
     private static final String AND_SIGN = "&";
     private static final String EQUAL_SIGN = "=";
@@ -35,20 +35,11 @@ public class TimerRoute extends RouteBuilder {
                 .handled(true)
                 .process(new ErrorProcessor());
 
-        // TODO: register event listener
-        // validate queries and throw Veto when not valid
-        // else log query pattern:
-        // parent query:
-        //   x
-        // child query:
-        //   y (filter: a)
-        //   z (filter: b)
-
         from(generateTimerEndpoint())
                 .routeId(ROUTE_ID_TIMER)
                 .id(ROUTE_ID_TIMER)
                 .setExchangePattern(ExchangePattern.InOnly)
-                .log(LoggingLevel.INFO, LOGGER, "Got time event...")
+                .log(LoggingLevel.DEBUG, LOGGER, "Got time event...")
                 .to(PrepareRoute.ROUTE_ENDPOINT);
 
     }
@@ -62,7 +53,7 @@ public class TimerRoute extends RouteBuilder {
 
     protected String generateTimerEndpoint() {
         StringBuilder buffer = new StringBuilder();
-        // timer://harvest?fixedRate=true&period=10s
+        // timer://queryTimer?fixedRate=true&period=10s
         buffer.append(TIMER_MAIN);
         buffer.append(QUESTION_SIGN).append("fixedRate").append(EQUAL_SIGN).append(TRUE_VALUE);
         buffer.append(AND_SIGN).append("period").append(EQUAL_SIGN).append(this.period);

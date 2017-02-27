@@ -16,7 +16,7 @@ public class HostSplitter {
 
     @Handler
     public List<Host> splitByHost(@Header(value = JolokiaMain.HEADER_QUERY_CONTEXT) QueryContext queryContext) {
-        LOGGER.trace("Splitter by Host called...");
+        LOGGER.debug("Splitter by Host called, header reference: {}", queryContext);
         return queryContext.getHosts();
     }
 
