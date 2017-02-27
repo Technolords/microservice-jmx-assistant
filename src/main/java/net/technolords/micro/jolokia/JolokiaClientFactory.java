@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.technolords.micro.model.jaxb.Host;
-import net.technolords.micro.model.jaxb.JolokiaQuery;
 import net.technolords.micro.registry.JolokiaRegistry;
 
 public class JolokiaClientFactory {
@@ -17,20 +16,16 @@ public class JolokiaClientFactory {
     private static final int DEFAULT_CONNECTION_TIMEOUT = 3000;
     private static Map<String, J4pClient> clientMap = new HashMap<>();
 
-    public static J4pClient findJolokiaClient(JolokiaQuery jolokiaQuery) {
-        J4pClient client = null;
-        if (jolokiaQuery != null) {
-            Host host = jolokiaQuery.getHost();
-            if (clientMap.containsKey(host.getHost())) {
-                LOGGER.info("Found cached client...");
-                return clientMap.get(host.getHost());
-            } else {
-                client = createJolokiaClient(host);
-                LOGGER.info("Created client...");
-                clientMap.put(host.getHost(), client);
-            }
+    public static J4pClient findJolokiaClient(Host host) {
+        if (clientMap.containsKey(host.getHost())) {
+            LOGGER.info("Found cached client...");
+            return clientMap.get(host.getHost());
+        } else {
+            J4pClient client = createJolokiaClient(host);
+            LOGGER.info("Created client...");
+            clientMap.put(host.getHost(), client);
+            return clientMap.get(host.getHost());
         }
-        return client;
     }
 
     private static J4pClient createJolokiaClient(Host host) {
