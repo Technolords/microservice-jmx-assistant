@@ -53,6 +53,11 @@ public class TimerRoute extends RouteBuilder {
 
     }
 
+    /*
+        String invoker = exchange.getProperty(Exchange.TIMER_NAME, String.class);
+        long period = exchange.getProperty(Exchange.TIMER_PERIOD, Long.class);
+     */
+
     // TODO: experiment with short interval and sleep, abort timer?
 
     protected String generateTimerEndpoint() {

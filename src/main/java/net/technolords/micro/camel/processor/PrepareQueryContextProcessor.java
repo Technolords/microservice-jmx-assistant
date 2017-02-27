@@ -14,6 +14,7 @@ import net.technolords.micro.model.QueryContext;
 import net.technolords.micro.model.jaxb.Host;
 import net.technolords.micro.model.jaxb.JolokiaConfiguration;
 import net.technolords.micro.model.jaxb.JolokiaQuery;
+import net.technolords.micro.model.jaxb.Output;
 import net.technolords.micro.registry.JolokiaRegistry;
 
 public class PrepareQueryContextProcessor implements Processor {
@@ -22,10 +23,11 @@ public class PrepareQueryContextProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        LOGGER.info("PrepareQueryContextProcessor called...");
+        LOGGER.debug("PrepareQueryContextProcessor called...");
         if (this.modelManager == null) {
             this.modelManager = JolokiaRegistry.findModelManager();
         }
+        exchange.setProperty(JolokiaMain.PROPERTY_OUTPUT, this.findOutput());
         exchange.getIn().setHeader(JolokiaMain.HEADER_QUERY_CONTEXT, this.createQueryContext(this.findHosts()));
     }
 
@@ -39,6 +41,11 @@ public class PrepareQueryContextProcessor implements Processor {
         return queryContext;
     }
 
+    private Output findOutput() {
+        Output output = this.modelManager.getJolokiaConfiguration().getOutput();
+        return output;
+    }
+
     private List<Host> findHosts() {
         List<Host> hosts = new ArrayList<>();
         JolokiaQuery jolokiaQuery = this.hasParentQuery();
@@ -48,16 +55,16 @@ public class PrepareQueryContextProcessor implements Processor {
 //            hosts.add()
         } else {
             Host host = this.findAssociatedHost();
-            LOGGER.info("Host found: {}", host.getHost());
+            LOGGER.trace("Host found: {}", host.getHost());
             hosts.add(host);
         }
-        LOGGER.info("Total hosts: {}", hosts.size());
+        LOGGER.debug("Total hosts: {}", hosts.size());
         return hosts;
     }
 
     private List<JolokiaQuery> findQueries() {
         List<JolokiaQuery> queries = this.modelManager.getJolokiaConfiguration().getJolokiaQueries();
-        LOGGER.info("Total queries: {}", queries.size());
+        LOGGER.debug("Total queries: {}", queries.size());
         return queries;
     }
 

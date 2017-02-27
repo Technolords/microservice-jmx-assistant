@@ -5,6 +5,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.technolords.micro.camel.JolokiaMain;
 import net.technolords.micro.camel.expression.HostSplitter;
 
 public class ContextRoute extends RouteBuilder {
@@ -24,6 +25,7 @@ public class ContextRoute extends RouteBuilder {
                 .log(LoggingLevel.INFO, LOGGER, "Executing context (splitting by host)...")
                 .split()
                     .method(hostSplitter)
+                    .setHeader(JolokiaMain.HEADER_HOST, body())
                     .to(HostRoute.ROUTE_ENDPOINT)
                     .id(MARKER_FOR_HOST_ROUTE);
 

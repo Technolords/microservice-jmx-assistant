@@ -21,7 +21,7 @@ public class QueryProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         LOGGER.info("QueryProcessor called...");
         Host host = exchange.getIn().getHeader(JolokiaMain.HEADER_HOST, Host.class);
-        JolokiaQuery jolokiaQuery = exchange.getIn().getHeader(JolokiaMain.HEADER_QUERY, JolokiaQuery.class);
+        JolokiaQuery jolokiaQuery = exchange.getIn().getBody(JolokiaQuery.class);
         if (host != null) {
             if (jolokiaQuery != null) {
                 J4pClient client = JolokiaClientFactory.findJolokiaClient(host);
