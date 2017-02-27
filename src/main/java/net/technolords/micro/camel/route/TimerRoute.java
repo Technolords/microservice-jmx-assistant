@@ -7,17 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.technolords.micro.camel.processor.ErrorProcessor;
-import net.technolords.micro.camel.processor.JolokiaProcessor;
 import net.technolords.micro.registry.JolokiaRegistry;
 
 public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String DEFAULT_PERIOD = "10s";
     public static final String ROUTE_ID_TIMER = "routeTimer";
-    public static final String ROUTE_ID_MAIN = "routeMain";
-    public static final String ROUTE_ID_JOLOKIA = "routeJolokia";
-    private static final String DIRECT_MAIN = "direct:main";
-    private static final String DIRECT_JOLOKIA = "direct:jolokia";
     private static final String TIMER_MAIN = "timer://harvester";
     private static final String QUESTION_SIGN = "?";
     private static final String AND_SIGN = "&";
@@ -53,24 +48,8 @@ public class TimerRoute extends RouteBuilder {
                 .routeId(ROUTE_ID_TIMER)
                 .id(ROUTE_ID_TIMER)
                 .setExchangePattern(ExchangePattern.InOnly)
-                .to(PrepareRoute.ROUTE_ENDPOINT);
-
-        from(DIRECT_MAIN)
-                .routeId(ROUTE_ID_MAIN)
-                .id(ROUTE_ID_MAIN)
                 .log(LoggingLevel.INFO, LOGGER, "Got time event...")
-                .to(DIRECT_JOLOKIA);
-
-        from(DIRECT_JOLOKIA)
-                .routeId(ROUTE_ID_JOLOKIA)
-                .id(ROUTE_ID_JOLOKIA)
-                .to(QueryRoute.ROUTE_ENDPOINT);
-
-//        from(DIRECT_JOLOKIA)
-//                .routeId(ROUTE_ID_JOLOKIA)
-//                .id(ROUTE_ID_JOLOKIA)
-//                .process(new JolokiaProcessor())
-//                .to(OutputRoute.ROUTE_ENDPOINT);
+                .to(PrepareRoute.ROUTE_ENDPOINT);
 
     }
 
