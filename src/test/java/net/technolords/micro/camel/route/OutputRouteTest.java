@@ -2,7 +2,6 @@ package net.technolords.micro.camel.route;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;
-import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.RouteDefinition;
@@ -47,12 +46,7 @@ public class OutputRouteTest extends CamelTestSupport {
         RouteDefinition routeDefinition = super.context().getRouteDefinition(OutputRoute.ROUTE_ID);
         LOGGER.debug("RouteDefinition: {}", routeDefinition);
         Assert.assertNotNull(routeDefinition);
-        routeDefinition.adviceWith(super.context(), new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                super.weaveById(OutputRoute.MARKER_FOR_FILE).replace().to(MOCK_FILE_OUTPUT);
-            }
-        });
+        routeDefinition.adviceWith(super.context(), new ReplacedEndpointAdviceRoute(OutputRoute.MARKER_FOR_FILE, MOCK_FILE_OUTPUT));
         this.setExpectedMessageCount(1, 0, 0);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
@@ -72,12 +66,7 @@ public class OutputRouteTest extends CamelTestSupport {
         RouteDefinition routeDefinition = super.context().getRouteDefinition(OutputRoute.ROUTE_ID);
         LOGGER.debug("RouteDefinition: {}", routeDefinition);
         Assert.assertNotNull(routeDefinition);
-        routeDefinition.adviceWith(super.context(), new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                super.weaveById(OutputRoute.MARKER_FOR_REDIS).replace().to(MOCK_REDIS_OUTPUT);
-            }
-        });
+        routeDefinition.adviceWith(super.context(), new ReplacedEndpointAdviceRoute(OutputRoute.MARKER_FOR_REDIS, MOCK_REDIS_OUTPUT));
         this.setExpectedMessageCount(0, 1, 0);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
@@ -97,12 +86,7 @@ public class OutputRouteTest extends CamelTestSupport {
         RouteDefinition routeDefinition = super.context().getRouteDefinition(OutputRoute.ROUTE_ID);
         LOGGER.debug("RouteDefinition: {}", routeDefinition);
         Assert.assertNotNull(routeDefinition);
-        routeDefinition.adviceWith(super.context(), new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                super.weaveById(OutputRoute.MARKER_FOR_LOG).replace().to(MOCK_LOG_OUTPUT);
-            }
-        });
+        routeDefinition.adviceWith(super.context(), new ReplacedEndpointAdviceRoute(OutputRoute.MARKER_FOR_LOG, MOCK_LOG_OUTPUT));
         this.setExpectedMessageCount(0, 0, 1);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();
@@ -122,12 +106,7 @@ public class OutputRouteTest extends CamelTestSupport {
         RouteDefinition routeDefinition = super.context().getRouteDefinition(OutputRoute.ROUTE_ID);
         LOGGER.debug("RouteDefinition: {}", routeDefinition);
         Assert.assertNotNull(routeDefinition);
-        routeDefinition.adviceWith(super.context(), new AdviceWithRouteBuilder() {
-            @Override
-            public void configure() throws Exception {
-                super.weaveById(OutputRoute.MARKER_FOR_LOG).replace().to(MOCK_LOG_OUTPUT);
-            }
-        });
+        routeDefinition.adviceWith(super.context(), new ReplacedEndpointAdviceRoute(OutputRoute.MARKER_FOR_LOG, MOCK_LOG_OUTPUT));
         this.setExpectedMessageCount(0, 0, 1);
         // Test
         ProducerTemplate producerTemplate = super.context().createProducerTemplate();

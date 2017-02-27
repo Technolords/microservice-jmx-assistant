@@ -10,6 +10,6 @@ public class RedisProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        LOGGER.info("Todo");
+        LOGGER.info("Todo: not implemented yet...");
     }
 }
