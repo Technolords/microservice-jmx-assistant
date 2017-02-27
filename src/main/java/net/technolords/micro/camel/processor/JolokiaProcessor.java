@@ -45,7 +45,7 @@ public class JolokiaProcessor implements Processor {
         for (JolokiaQuery jolokiaQuery : jolokiaQueries) {
             LOGGER.info("About to execute query id: {}", jolokiaQuery.getId());
             try {
-                J4pClient client = JolokiaClientFactory.findJolokiaClient(jolokiaQuery);
+                J4pClient client = JolokiaClientFactory.findJolokiaClient(null);
                 J4pRequest request = JolokiaQueryFactory.findJolokiaRequest(jolokiaQuery);
                 J4pResponse response = client.execute(request);
                 exchange.getIn().setHeader(JolokiaMain.HEADER_RESPONSE, response);
