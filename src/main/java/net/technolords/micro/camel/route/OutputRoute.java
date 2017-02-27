@@ -35,9 +35,9 @@ public class OutputRoute extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from(ROUTE_ENDPOINT)
-            .routeId(ROUTE_ID)
-            .id(ROUTE_ID)
-            .choice()
+                .routeId(ROUTE_ID)
+                .id(ROUTE_ID)
+                .choice()
                 .when(this.filePredicate)
                     .log(LoggingLevel.INFO, LOGGER, "Direct output to file...")
                     .process(this.fileProcessor)
