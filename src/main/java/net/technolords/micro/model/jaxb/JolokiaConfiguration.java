@@ -1,5 +1,6 @@
 package net.technolords.micro.model.jaxb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -9,6 +10,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class JolokiaConfiguration {
     private Output output;
     private List<JolokiaQuery> jolokiaQueries;
+
+    public JolokiaConfiguration() {
+        this.jolokiaQueries = new ArrayList<>();
+    }
 
     @XmlElement (name = "output")
     public Output getOutput() {
