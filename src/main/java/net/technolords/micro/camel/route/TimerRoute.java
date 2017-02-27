@@ -52,8 +52,8 @@ public class TimerRoute extends RouteBuilder {
         from(generateTimerEndpoint())
                 .routeId(ROUTE_ID_TIMER)
                 .id(ROUTE_ID_TIMER)
-                .setExchangePattern(ExchangePattern.InOut)
-                .to(DIRECT_MAIN);
+                .setExchangePattern(ExchangePattern.InOnly)
+                .to(PrepareRoute.ROUTE_ENDPOINT);
 
         from(DIRECT_MAIN)
                 .routeId(ROUTE_ID_MAIN)
@@ -64,8 +64,13 @@ public class TimerRoute extends RouteBuilder {
         from(DIRECT_JOLOKIA)
                 .routeId(ROUTE_ID_JOLOKIA)
                 .id(ROUTE_ID_JOLOKIA)
-                .process(new JolokiaProcessor())
-                .to(OutputRoute.ROUTE_ENDPOINT);
+                .to(QueryRoute.ROUTE_ENDPOINT);
+
+//        from(DIRECT_JOLOKIA)
+//                .routeId(ROUTE_ID_JOLOKIA)
+//                .id(ROUTE_ID_JOLOKIA)
+//                .process(new JolokiaProcessor())
+//                .to(OutputRoute.ROUTE_ENDPOINT);
 
     }
 

@@ -11,12 +11,17 @@ import org.xml.sax.SAXException;
 
 import net.technolords.micro.camel.listener.JolokiaMainListener;
 import net.technolords.micro.camel.route.OutputRoute;
+import net.technolords.micro.camel.route.PrepareRoute;
+import net.technolords.micro.camel.route.QueryRoute;
 import net.technolords.micro.camel.route.TimerRoute;
 import net.technolords.micro.registry.JolokiaRegistry;
 
 public class JolokiaMain extends Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaMain.class);
     public static final String PROPERTY_OUTPUT = "output";
+    public static final String HEADER_HOST = "host";
+    public static final String HEADER_QUERY_CONTEXT = "queryContext";
+    public static final String HEADER_QUERY = "query";
     public static final String HEADER_RESPONSE = "response";
 
     public JolokiaMain() {
@@ -29,6 +34,8 @@ public class JolokiaMain extends Main {
         JolokiaRegistry.registerBeansInRegistryBeforeStart();
         super.addMainListener(new JolokiaMainListener());
         super.addRouteBuilder(new TimerRoute());
+        super.addRouteBuilder(new PrepareRoute());
+        super.addRouteBuilder(new QueryRoute());
         super.addRouteBuilder(new OutputRoute());
     }
 

@@ -13,12 +13,18 @@ import net.technolords.micro.camel.processor.FileProcessor;
 import net.technolords.micro.camel.processor.LogProcessor;
 import net.technolords.micro.camel.processor.RedisProcessor;
 
+/**
+ * The responsibility of this route is to process the result of the query accordingly
+ * to the configuration. Note that result is a single response, and that in case of
+ * multiple queries and responses, this route is called multiple times. So the scope
+ * is simple, deal with a single response.
+ */
 public class OutputRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     public static final String ROUTE_ID = "routeOutput";
-    public static final String MARKER_FOR_FILE = "outputForFile";
-    public static final String MARKER_FOR_REDIS = "outputForRedis";
-    public static final String MARKER_FOR_LOG = "outputForLog";
+    public static final String MARKER_FOR_FILE = "markerForFile";
+    public static final String MARKER_FOR_REDIS = "markerForRedis";
+    public static final String MARKER_FOR_LOG = "markerForLog";
     public static final String ROUTE_ENDPOINT = "direct:output";
     private Predicate filePredicate = new OutputFilePredicate();
     private Predicate redisPredicate = new OutputRedisPredicate();
