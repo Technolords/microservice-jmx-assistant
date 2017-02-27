@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import net.technolords.micro.camel.JolokiaMain;
 import net.technolords.micro.camel.expression.QuerySplitter;
 
+/**
+ * The responsibility of this route is to split by Jolokia queries. This opens the door
+ * for parallelism.
+ */
 public class HostRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     public static final String ROUTE_ID = "routeHost";

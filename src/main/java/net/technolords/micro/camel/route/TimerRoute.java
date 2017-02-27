@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import net.technolords.micro.camel.processor.ErrorProcessor;
 import net.technolords.micro.registry.JolokiaRegistry;
 
+/**
+ * The responsibility of this route is to generate 'events' based on a timer.
+ */
 public class TimerRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String DEFAULT_PERIOD = "10s";
@@ -44,16 +47,17 @@ public class TimerRoute extends RouteBuilder {
 
     }
 
-    /*
-        String invoker = exchange.getProperty(Exchange.TIMER_NAME, String.class);
-        long period = exchange.getProperty(Exchange.TIMER_PERIOD, Long.class);
+    /**
+     * Auxiliary method to generate a Camel endpoint representing a Timer.
+     * The expected format:
+     *
+     *  timer://queryTimer?fixedRate=true&period=10s
+     *
+     * @return
+     *  A String representing a Camel Timer endpoint
      */
-
-    // TODO: experiment with short interval and sleep, abort timer?
-
     protected String generateTimerEndpoint() {
         StringBuilder buffer = new StringBuilder();
-        // timer://queryTimer?fixedRate=true&period=10s
         buffer.append(TIMER_MAIN);
         buffer.append(QUESTION_SIGN).append("fixedRate").append(EQUAL_SIGN).append(TRUE_VALUE);
         buffer.append(AND_SIGN).append("period").append(EQUAL_SIGN).append(this.period);

@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import net.technolords.micro.camel.JolokiaMain;
 import net.technolords.micro.camel.expression.HostSplitter;
 
+/**
+ * The responsibility of this route is to split by hosts. This opens the door
+ * for parallelism.
+ */
 public class ContextRoute extends RouteBuilder {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     public static final String ROUTE_ID = "routeContext";
