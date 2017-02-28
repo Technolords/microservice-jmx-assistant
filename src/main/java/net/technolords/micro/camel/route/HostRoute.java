@@ -19,8 +19,6 @@ public class HostRoute extends RouteBuilder {
     public static final String MARKER_FOR_QUERY_ROUTE = "markerForQueryRoute";
     private QuerySplitter querySplitter = new QuerySplitter();
 
-    // TODO: parameter for parallel queries + thread pool
-
     @Override
     public void configure() throws Exception {
         from(ROUTE_ENDPOINT)

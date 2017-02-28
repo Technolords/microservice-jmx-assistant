@@ -24,10 +24,14 @@ public class QueryProcessor implements Processor {
         JolokiaQuery jolokiaQuery = exchange.getIn().getBody(JolokiaQuery.class);
         if (host != null) {
             if (jolokiaQuery != null) {
-                J4pClient client = JolokiaClientFactory.findJolokiaClient(host);
-                J4pRequest request = JolokiaQueryFactory.findJolokiaRequest(jolokiaQuery);
-                J4pResponse response = client.execute(request);
-                exchange.getIn().setHeader(JolokiaMain.HEADER_RESPONSE, response);
+                try {
+                    J4pClient client = JolokiaClientFactory.findJolokiaClient(host);
+                    J4pRequest request = JolokiaQueryFactory.findJolokiaRequest(jolokiaQuery);
+                    J4pResponse response = client.execute(request);
+                    exchange.getIn().setHeader(JolokiaMain.HEADER_RESPONSE, response);
+                } catch (Exception e) {
+                    LOGGER.error("Unable to execute query", e);
+                }
             } else {
                 LOGGER.error("Unable to create query: no model");
             }

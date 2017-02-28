@@ -1,7 +1,7 @@
 package net.technolords.micro.jolokia;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.jolokia.client.BasicAuthenticator;
 import org.jolokia.client.J4pClient;
@@ -14,16 +14,17 @@ import net.technolords.micro.registry.JolokiaRegistry;
 public class JolokiaClientFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(JolokiaClientFactory.class);
     private static final int DEFAULT_CONNECTION_TIMEOUT = 3000;
-    private static Map<String, J4pClient> clientMap = new HashMap<>();
+    private static Map<String, J4pClient> clientMap = new ConcurrentHashMap<>();
 
     public static J4pClient findJolokiaClient(Host host) {
-        if (clientMap.containsKey(host.getHost())) {
+        boolean containsKey = clientMap.containsKey(host.getHost());
+        if (containsKey) {
             LOGGER.debug("Found cached client...");
             return clientMap.get(host.getHost());
         } else {
             J4pClient client = createJolokiaClient(host);
-            LOGGER.info("Created client...");
             clientMap.put(host.getHost(), client);
+            LOGGER.info("Created client, size of map: {}", clientMap.size());
             return clientMap.get(host.getHost());
         }
     }
@@ -38,11 +39,13 @@ public class JolokiaClientFactory {
                     .authenticator(new BasicAuthenticator().preemptive())
                     .connectionTimeout(getConnectionTimeout())
                     .build();
+            LOGGER.info("Client with credentials instantiated...");
         } else {
             client = J4pClient.
                     url(host.getHost())
                     .connectionTimeout(getConnectionTimeout())
                     .build();
+            LOGGER.info("Client without credentials instantiated...");
         }
         return client;
     }
