@@ -61,7 +61,11 @@ public class ModelManager {
         LOGGER.info("About to initialize the configuration...");
         Unmarshaller unmarshaller = JAXBContext.newInstance(JolokiaConfiguration.class).createUnmarshaller();
         this.jolokiaConfiguration = (JolokiaConfiguration) unmarshaller.unmarshal(inputStream);
-        LOGGER.info("... done, total queries: {}", this.jolokiaConfiguration.getJolokiaQueries().size());
+        if (this.jolokiaConfiguration.getJsonParentQuery() != null) {
+            LOGGER.info("... done, total queries: {} and has parent query", this.jolokiaConfiguration.getJolokiaQueries().size());
+        } else {
+            LOGGER.info("... done, total queries: {}", this.jolokiaConfiguration.getJolokiaQueries().size());
+        }
         // TODO: log properly
         // validate queries and throw Veto when not valid
         // else log query pattern:
