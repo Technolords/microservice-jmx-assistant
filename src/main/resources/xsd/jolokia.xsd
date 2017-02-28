@@ -59,6 +59,19 @@
         | One of:
         |   <log level="info"/>
         +-->
+    <xs:complexType name="filtersType">
+        <xs:sequence>
+            <xs:element name="filter" type="xs:string" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="jsonPathType">
+        <xs:sequence>
+            <xs:element name="expression" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="filters" type="filtersType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    
     <xs:complexType name="outputType">
         <xs:choice>
             <xs:element name="log" />
@@ -69,6 +82,7 @@
     <xs:complexType name="parentQueryType">
         <xs:sequence>
             <xs:element name="query" type="queryType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="json-path" type="jsonPathType" minOccurs="0" maxOccurs="1" />
         </xs:sequence>
     </xs:complexType>
     

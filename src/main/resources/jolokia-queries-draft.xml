@@ -25,6 +25,12 @@
             <objectName>io.fabric8:type=Fabric</objectName>
             <operation>containers()</operation>
         </query>
+        <json-path>
+            <expression>$.value[*].jolokiaUrl</expression>
+            <filters>
+                <filter>http://127.0.0.1:8181/jolokia</filter>
+            </filters>
+        </json-path>
     </parent-query>
     
     <query id="getMemoryUsage">
