@@ -20,8 +20,9 @@ public class ModelManagerTest {
     @DataProvider(name = DATA_SET_FOR_CONFIGURATIONS)
     public Object[][] dataSetMock() {
         return new Object[][]{
-                {"src/test/resources/xml/config-1.xml"},
-                {"src/test/resources/xml/config-2.xml"},
+//                { "src/test/resources/xml/config-1.xml" },
+//                { "src/test/resources/xml/config-2.xml" },
+                { "src/test/resources/xml/config-3.xml" },
         };
     }
 

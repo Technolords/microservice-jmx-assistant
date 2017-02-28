@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jolokia xmlns="http://xsd.technolords.net">
+
+    <output>
+        <log/>
+    </output>
+
+    <!--+
+        | The parent query is optional. The goal of a parent-query is
+        | determine other local jvm's. Consequence is that all other
+        | queries are reserved for each jvm.
+        +-->
+    <parent-query>
+        <query id="getContainers">
+            <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+            <objectName>io.fabric8:type=Fabric</objectName>
+            <operation>containers()</operation>
+        </query>
+        <json-path>
+            <expression>$.value[*].jolokiaUrl</expression>
+            <filters>
+                <filter>http://127.0.0.1:8181/jolokia</filter>
+            </filters>
+        </json-path>
+    </parent-query>
+
+    <!--+
+        | Test case with multiple queries
+        +-->
+    <query id="getMemoryUsage">
+        <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+        <objectName>java.lang:type=Memory</objectName>
+        <attributes>
+            <attribute>HeapMemoryUsage</attribute>
+        </attributes>
+    </query>
+
+    <query id="getVmName">
+        <host username="admin" password="admin">http://localhost:8181/jolokia</host>
+        <objectName>java.lang:type=Runtime</objectName>
+        <attributes>
+            <attribute>VmName</attribute>
+        </attributes>
+    </query>
+
+</jolokia>

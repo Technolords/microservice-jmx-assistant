@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement (name = "jolokia", namespace = "http://xsd.technolords.net")
 public class JolokiaConfiguration {
     private Output output;
+    private JsonParentQuery jsonParentQuery;
     private List<JolokiaQuery> jolokiaQueries;
 
     public JolokiaConfiguration() {
@@ -22,6 +23,15 @@ public class JolokiaConfiguration {
 
     public void setOutput(Output output) {
         this.output = output;
+    }
+
+    @XmlElement (name = "parent-query")
+    public JsonParentQuery getJsonParentQuery() {
+        return jsonParentQuery;
+    }
+
+    public void setJsonParentQuery(JsonParentQuery jsonParentQuery) {
+        this.jsonParentQuery = jsonParentQuery;
     }
 
     @XmlElement (name = "query")
