@@ -25,6 +25,7 @@ public class QueryProcessor implements Processor {
         if (host != null) {
             if (jolokiaQuery != null) {
                 try {
+                    LOGGER.info("About to execute query for host: {}", host.getHost());
                     J4pClient client = JolokiaClientFactory.findJolokiaClient(host);
                     J4pRequest request = JolokiaQueryFactory.findJolokiaRequest(jolokiaQuery);
                     J4pResponse response = client.execute(request);
