@@ -27,6 +27,7 @@
         <version.camel>2.18.2</version.camel>
         <version.camel.testng>2.18.2</version.camel.testng>
         <version.commons.logging>1.2</version.commons.logging>
+        <version.jayway>2.2.0</version.jayway>
         <version.jolokia>1.3.5</version.jolokia>
         <version.log4j2>2.7</version.log4j2>
         <version.maven.plugin.build.helper>1.12</version.maven.plugin.build.helper>
@@ -54,6 +55,13 @@
         <!--+
             | Default scope
             +-->
+        <dependency>
+            <!-- Required to use Json path -->
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${version.jayway}</version>
+        </dependency>
+
         <dependency>
             <!-- Required for Jolokia, transitive dependency -->
             <groupId>commons-logging</groupId>
