@@ -31,7 +31,7 @@ public class QueryProcessor implements Processor {
                     J4pResponse response = client.execute(request);
                     exchange.getIn().setHeader(JolokiaMain.HEADER_RESPONSE, response);
                 } catch (Exception e) {
-                    LOGGER.error("Unable to execute query", e);
+                    LOGGER.error("Unable to execute query: {}", e.getMessage());
                 }
             } else {
                 LOGGER.error("Unable to create query: no model");
