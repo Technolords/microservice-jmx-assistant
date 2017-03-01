@@ -1,8 +1,5 @@
 package net.technolords.micro.camel.processor;
 
-import java.io.StringReader;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +54,7 @@ public class PrepareProcessor implements Processor {
     }
 
     private Output findOutput() {
-        Output output = this.modelManager.getJolokiaConfiguration().getOutput();
-        return output;
+        return this.modelManager.getJolokiaConfiguration().getOutput();
     }
 
     private List<Host> findHosts() {
@@ -76,9 +72,9 @@ public class PrepareProcessor implements Processor {
                 String json = response.asJSONObject().toJSONString();
                 if (jsonPath != null) {
                     // Refine answer, i.e. parse JsonPath
-                    StringReader reader = new StringReader(response.asJSONObject().toJSONString());
                     List<String> matches = com.jayway.jsonpath.JsonPath.read(json, jsonPath.getJsonPathExpression().getExpression());
                     for (String match : matches) {
+                        // TODO: implement filter
                         hosts.add(this.createHost(match, parentHost.getUsername(), parentHost.getPassword()));
                     }
                 } else {
@@ -90,8 +86,10 @@ public class PrepareProcessor implements Processor {
             }
         } else {
             Host host = this.findAssociatedHost();
-            LOGGER.trace("Host found: {}", host.getHost());
-            hosts.add(host);
+            if (host != null) {
+                LOGGER.trace("Host found: {}", host.getHost());
+                hosts.add(host);
+            }
         }
         LOGGER.debug("Total hosts: {}", hosts.size());
         return hosts;
@@ -112,8 +110,7 @@ public class PrepareProcessor implements Processor {
     }
 
     private JsonParentQuery hasParentQuery() {
-        JsonParentQuery jsonParentQuery = this.modelManager.getJolokiaConfiguration().getJsonParentQuery();
-        return jsonParentQuery;
+        return this.modelManager.getJolokiaConfiguration().getJsonParentQuery();
     }
 
     private Host findAssociatedHost() {
@@ -123,8 +120,7 @@ public class PrepareProcessor implements Processor {
                     .getJolokiaQueries()
                     .stream()
                     .findFirst()
-                    .map(JolokiaQuery::getHost)
-                    .get();
+                    .map(JolokiaQuery::getHost).orElseGet(null);
         }
         return null;
     }
