@@ -32,6 +32,7 @@
         <version.log4j2>2.7</version.log4j2>
         <version.maven.plugin.build.helper>1.12</version.maven.plugin.build.helper>
         <version.maven.plugin.compiler>3.3</version.maven.plugin.compiler>
+        <version.maven.plugin.javadoc>2.10.4</version.maven.plugin.javadoc>
         <version.maven.plugin.shade>2.4.3</version.maven.plugin.shade>
         <version.maven.plugin.source>2.4</version.maven.plugin.source>
         <version.maven.plugin.surefire>2.18.1</version.maven.plugin.surefire>
@@ -151,6 +152,15 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.maven.plugin.javadoc}</version>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
 
