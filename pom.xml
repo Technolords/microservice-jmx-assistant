@@ -9,8 +9,9 @@
 
     <name>Technolords :: Microservices :: Jolokia client</name>
     <description>
-        A JMX assistant, suitable to monitor any JVM
+        A Joloki client, suitable to monitor any Jolokia equipped Java application
     </description>
+    <url>https://github.com/Technolords/microservice-jolokia-client</url>
 
     <!--+
         | Properties
@@ -32,10 +33,12 @@
         <version.log4j2>2.7</version.log4j2>
         <version.maven.plugin.build.helper>1.12</version.maven.plugin.build.helper>
         <version.maven.plugin.compiler>3.3</version.maven.plugin.compiler>
+        <version.maven.plugin.gpg>1.5</version.maven.plugin.gpg>
         <version.maven.plugin.javadoc>2.10.4</version.maven.plugin.javadoc>
         <version.maven.plugin.shade>2.4.3</version.maven.plugin.shade>
         <version.maven.plugin.source>2.4</version.maven.plugin.source>
         <version.maven.plugin.surefire>2.18.1</version.maven.plugin.surefire>
+        <version.maven.plugin.sonatype.nexus.staging>1.6.7</version.maven.plugin.sonatype.nexus.staging>
         <version.testng>6.9.4</version.testng>
         <version.xmlunit>1.6</version.xmlunit>
     </properties>
@@ -45,6 +48,7 @@
         +-->
     <scm>
         <connection>scm:git:https://github.com/Technolords/microservice-jolokia-client</connection>
+        <url>https://github.com/Technolords/microservice-jolokia-client/</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -179,11 +183,34 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>${version.maven.plugin.gpg}</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${version.maven.plugin.javadoc}</version>
                 <configuration>
                     <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -285,6 +312,19 @@
             </plugin>
 
             <plugin>
+                <!-- Required to interact with OSSRH -->
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${version.maven.plugin.sonatype.nexus.staging}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <!-- Release plugin configuration-->
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
@@ -298,7 +338,14 @@
     </build>
 
     <distributionManagement>
-        <downloadUrl>https://github.com/Technolords/microservice-jolokia-client/releases</downloadUrl>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
 </project>
