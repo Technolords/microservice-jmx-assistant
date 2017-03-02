@@ -58,7 +58,17 @@
         </license>
     </licenses>
 
-
+    <!--+
+        | Developers information
+        +-->
+    <developers>
+        <developer>
+            <name>Mike Ahlers</name>
+            <email>mike@technolords.net</email>
+            <organization>Technolords</organization>
+            <organizationUrl>https://www.technolords.net</organizationUrl>
+        </developer>
+    </developers>
 
     <!--+
         | Dependencies
