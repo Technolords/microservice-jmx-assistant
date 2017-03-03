@@ -4,7 +4,7 @@
 
     <groupId>net.technolords.micro.service</groupId>
     <artifactId>microservice-jolokia-client</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Technolords :: Microservices :: Jolokia client</name>
@@ -50,7 +50,7 @@
     <scm>
         <connection>scm:git:https://github.com/Technolords/microservice-jolokia-client</connection>
         <url>https://github.com/Technolords/microservice-jolokia-client/</url>
-        <tag>microservice-jolokia-client-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <!--+
