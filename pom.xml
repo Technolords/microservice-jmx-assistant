@@ -98,6 +98,7 @@
         </dependency>
 
         <dependency>
+            <!-- Required for EIP patterns and integrations -->
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
             <version>${version.camel}</version>
@@ -127,6 +128,7 @@
             <version>${version.log4j2}</version>
         </dependency>
         <dependency>
+            <!-- Required to use Jolokia client -->
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-client-java</artifactId>
             <version>${version.jolokia}</version>
@@ -183,6 +185,7 @@
             </plugin>
 
             <plugin>
+                <!-- Required to perform a release (Maven Central) -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${version.maven.plugin.release}</version>
@@ -191,10 +194,6 @@
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
-                    <!--+
-                        | Default tag: microservice-jolokia-client-1.0.0
-                        | @ : substitute the values after the version transformation has taken place
-                        +-->
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
@@ -227,10 +226,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${version.maven.plugin.surefire}</version>
                 <configuration>
-                    <!--<childDelegation>false</childDelegation>-->
                     <useFile>true</useFile>
-                    <!-- Due to memory problems, each test class runs in a separate JVM -->
-                    <!--<forkMode>true</forkMode>-->
                     <failIfNoTests>false</failIfNoTests>
                     <includes>
                         <include>**/*Test.java</include>
