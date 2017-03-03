@@ -191,6 +191,11 @@
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
+                    <!--+
+                        | Default tag: microservice-jolokia-client-1.0.0
+                        | @ : substitute the values after the version transformation has taken place
+                        +-->
+                    <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
 
