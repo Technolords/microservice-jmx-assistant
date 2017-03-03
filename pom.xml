@@ -4,7 +4,7 @@
 
     <groupId>net.technolords.micro.service</groupId>
     <artifactId>microservice-jolokia-client</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Technolords :: Microservices :: Jolokia client</name>
